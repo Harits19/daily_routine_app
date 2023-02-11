@@ -1,7 +1,9 @@
 import 'package:daily_routine_app/src/constan/date.dart';
 import 'package:daily_routine_app/src/constan/size.dart';
+import 'package:daily_routine_app/src/home/add_task_view.dart';
 import 'package:daily_routine_app/src/home/date_row_view.dart';
 import 'package:daily_routine_app/src/home/task_view.dart';
+import 'package:daily_routine_app/src/models/task_model.dart';
 import 'package:daily_routine_app/src/utils/date_util.dart';
 import 'package:daily_routine_app/src/widgets/horizontal_calendar.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +58,20 @@ class _HomeViewState extends State<HomeView> {
     }
 
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: AddButton(
+        onPressed: () async {
+          final task = await showModalBottomSheet<TaskModel>(
+              isScrollControlled: true,
+              context: context,
+              useSafeArea: true,
+              builder: (context) {
+                return const AddTaskView();
+              });
+          log.info(
+              'title ${task?.title} hour ${task?.time.hour} minute ${task?.time.minute}');
+        },
+      ),
       body: SafeArea(
         child: ListView(
           children: [
@@ -96,9 +112,34 @@ class _HomeViewState extends State<HomeView> {
             ...List.generate(
               100,
               (index) => const TaskView(),
+            ),
+            //dummy add button
+            const Opacity(
+              opacity: 0,
+              child: AddButton(),
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class AddButton extends StatelessWidget {
+  const AddButton({
+    super.key,
+    this.onPressed,
+  });
+
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(KSize.s16),
+      child: FloatingActionButton(
+        onPressed: onPressed,
+        child: const Icon(Icons.add),
       ),
     );
   }
