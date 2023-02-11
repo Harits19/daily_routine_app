@@ -34,6 +34,9 @@ class _AddTaskViewState extends State<AddTaskView> {
             child: Column(
               children: [
                 TextFormField(
+                  onChanged: (_) {
+                    setState(() {});
+                  },
                   controller: title,
                   decoration: const InputDecoration(labelText: 'Title'),
                 ),
@@ -45,7 +48,7 @@ class _AddTaskViewState extends State<AddTaskView> {
           ),
           MyTimePickerDialog(
             initialEntryMode: TimePickerEntryMode.inputOnly,
-            initialTime: TimeOfDay.now(),
+            initialTime: time,
             helpText: 'Enter Task Time',
             cancelText: '',
             confirmText: '',
@@ -59,9 +62,12 @@ class _AddTaskViewState extends State<AddTaskView> {
             height: KSize.s24,
           ),
           ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context, TaskModel(time: time, title: title.text));
-            },
+            onPressed: title.text.isEmpty
+                ? null
+                : () {
+                    Navigator.pop(
+                        context, TaskModel(time: time, title: title.text));
+                  },
             child: const Text('Save'),
           ),
           const SizedBox(

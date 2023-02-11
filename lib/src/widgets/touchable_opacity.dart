@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 
 class TouchableOpacity extends StatefulWidget {
   const TouchableOpacity({Key? key, required this.child, this.onTap})
@@ -13,7 +12,6 @@ class TouchableOpacity extends StatefulWidget {
 }
 
 class _TouchableOpacityState extends State<TouchableOpacity> {
-  final log = Logger(TouchableOpacity.name);
   double opacity = 1;
   @override
   Widget build(BuildContext context) {

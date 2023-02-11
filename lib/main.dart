@@ -1,13 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 
 import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
 import 'src/settings/settings_service.dart';
+import 'package:daily_routine_app/src/services/service_instance.dart';
 
 void main() async {
-  // Set up the SettingsController, which will glue user settings to multiple
+  WidgetsFlutterBinding
+      .ensureInitialized(); // Set up the SettingsController, which will glue user settings to multiple
   // Flutter Widgets.
   final settingsController = SettingsController(SettingsService());
 
@@ -19,13 +22,9 @@ void main() async {
   // SettingsController for changes, then passes it further down to the
   // SettingsView.
 
-  Logger.root.level = Level.ALL; // defaults to Level.INFO
-  Logger.root.onRecord.listen((record) {
-    if (kDebugMode) {
-      print(
-          '${record.loggerName} ${record.level.name}: ${record.time}: ${record.message}');
-    }
-  });
+
+
+
+  await ServiceInstance.initLocator();
   runApp(MyApp(settingsController: settingsController));
 }
-

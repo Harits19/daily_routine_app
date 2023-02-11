@@ -1,10 +1,14 @@
 import 'package:daily_routine_app/src/constan/size.dart';
+import 'package:daily_routine_app/src/models/task_model.dart';
 import 'package:flutter/material.dart';
 
 class TaskView extends StatefulWidget {
   const TaskView({
     super.key,
+    required this.task,
   });
+
+  final TaskModel task;
 
   @override
   State<TaskView> createState() => _TaskViewState();
@@ -37,11 +41,11 @@ class _TaskViewState extends State<TaskView> {
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: const [
+                  children: [
                     Text(
-                      'Title',
+                      widget.task.title,
                     ),
-                    Text('Time'),
+                    Text(widget.task.time.format(context)),
                   ],
                 ),
               ),

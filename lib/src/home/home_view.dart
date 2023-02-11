@@ -4,10 +4,13 @@ import 'package:daily_routine_app/src/home/add_task_view.dart';
 import 'package:daily_routine_app/src/home/date_row_view.dart';
 import 'package:daily_routine_app/src/home/task_view.dart';
 import 'package:daily_routine_app/src/models/task_model.dart';
+import 'package:daily_routine_app/src/models/time_of_day_model.dart';
+import 'package:daily_routine_app/src/task/controller/task_controller.dart';
 import 'package:daily_routine_app/src/utils/date_util.dart';
+import 'package:daily_routine_app/src/utils/logger_util.dart';
 import 'package:daily_routine_app/src/widgets/horizontal_calendar.dart';
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
+import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
   static const routeName = 'home_view';
@@ -26,10 +29,12 @@ class _HomeViewState extends State<HomeView> {
     final selectedMonth = selectedDate.month;
     final selectedYear = selectedDate.year;
     final selectedDay = selectedDate.day;
-    final log = Logger(HomeView.routeName);
+    final log = LoggerUtil(HomeView.routeName);
+    final taskRead = context.read<TaskController>();
 
     log.info(totalDate);
     log.info(KDate.listOfMonths);
+    log.info(TimeOfDay.now().toJson());
 
     DateTime getNextDay(DateTime nextDate) {
       var changedDay = selectedDay;
@@ -68,8 +73,8 @@ class _HomeViewState extends State<HomeView> {
               builder: (context) {
                 return const AddTaskView();
               });
-          log.info(
-              'title ${task?.title} hour ${task?.time.hour} minute ${task?.time.minute}');
+          if (task == null) return;
+          taskRead.addTask(task);
         },
       ),
       body: SafeArea(
@@ -109,9 +114,23 @@ class _HomeViewState extends State<HomeView> {
             const SizedBox(
               height: KSize.s16,
             ),
+            Consumer<TaskController>(builder: (context, task, child) {
+              return Column(
+                children: [
+                  ...task.data.map(
+                    (e) => TaskView(task: e),
+                  ),
+                ],
+              );
+            }),
             ...List.generate(
               100,
-              (index) => const TaskView(),
+              (index) => TaskView(
+                task: TaskModel(
+                  title: 'Title',
+                  time: TimeOfDay.now(),
+                ),
+              ),
             ),
             //dummy add button
             const Opacity(
