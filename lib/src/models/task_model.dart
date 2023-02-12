@@ -21,8 +21,12 @@ class TaskModel {
         time = timeOfDayFromJson(json['time']),
         checked = json['checked'];
 
-  Map<String, dynamic> toJson() =>
-      {"id": id, 'title': title, 'time': time.toJson(), 'checked': checked};
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        'title': title,
+        'time': time.toJson(),
+        'checked': checked,
+      };
 
   TaskModel copyWith({
     String? title,

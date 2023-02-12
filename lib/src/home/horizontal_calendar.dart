@@ -1,5 +1,7 @@
 import 'package:daily_routine_app/src/constan/date.dart';
 import 'package:daily_routine_app/src/constan/size.dart';
+import 'package:daily_routine_app/src/home/action_view.dart';
+import 'package:daily_routine_app/src/home/util_view.dart';
 import 'package:daily_routine_app/src/utils/date_util.dart';
 import 'package:daily_routine_app/src/widgets/touchable_opacity.dart';
 import 'package:flutter/material.dart';
@@ -54,22 +56,52 @@ class _HorizontalCalendarState extends State<HorizontalCalendar> {
         itemBuilder: (context, index) {
           final day = index + 1;
           final isSelected = day == widget.selectedDate.day;
-          final textColor = isSelected ? Colors.white : null;
           final weekDay = DateTime(selectedYear, selectedMonth, day).weekday;
+          final isHoliday = weekDay == 6 || weekDay == 7;
+          final textColor = isSelected
+              ? Colors.white
+              : isHoliday
+                  ? Colors.red
+                  : null;
           return TouchableOpacity(
+            onLongPress: () {
+              UtilView.showActionView(
+                context,
+                actions: [
+                  ActionViewProps(
+                    text: "Copy",
+                    icon: Icons.copy,
+                    onPress: () {
+                      Navigator.pop(context);
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return Column(
+                              children: [],
+                            );
+                          });
+                    },
+                  ),
+                ],
+              );
+            },
             onTap: () {
               scrollTo(index);
               final selectedDate = DateTime(selectedYear, selectedMonth, day);
               widget.onChangedDate(selectedDate);
             },
             child: Container(
-              color: isSelected ? Colors.blue : Colors.transparent,
+              color: isSelected
+                  ? isHoliday
+                      ? Colors.red
+                      : Colors.blue
+                  : Colors.transparent,
               padding: const EdgeInsets.all(KSize.s16),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    KDate.listOfDays[weekDay],
+                    KDate.listOfDays[weekDay].substring(0, 3),
                     style: TextStyle(color: textColor),
                   ),
                   const SizedBox(

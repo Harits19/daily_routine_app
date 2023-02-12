@@ -7,7 +7,7 @@ import 'package:daily_routine_app/src/models/time_of_day_model.dart';
 import 'package:daily_routine_app/src/task/controller/task_controller.dart';
 import 'package:daily_routine_app/src/utils/date_util.dart';
 import 'package:daily_routine_app/src/utils/logger_util.dart';
-import 'package:daily_routine_app/src/widgets/horizontal_calendar.dart';
+import 'package:daily_routine_app/src/home/horizontal_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

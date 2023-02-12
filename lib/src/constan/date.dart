@@ -1,3 +1,5 @@
+import 'package:daily_routine_app/src/models/daily_task_model.dart';
+
 class KDate {
   static List<String> get listOfMonths => [
         "dummy",
@@ -16,5 +18,5 @@ class KDate {
       ];
 
   static List<String> get listOfDays =>
-      ['dummy', "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+      ['dummy', ...Weekend.values.map((e) => e.text)];
 }

@@ -1,3 +1,4 @@
+import 'package:daily_routine_app/src/home/action_view.dart';
 import 'package:daily_routine_app/src/home/add_task_view.dart';
 import 'package:daily_routine_app/src/models/task_model.dart';
 import 'package:flutter/material.dart';
@@ -14,5 +15,23 @@ class UtilView {
             task: task,
           );
         });
+  }
+
+  static Future<void> showActionView(
+    BuildContext context, {
+    required List<ActionViewProps> actions,
+  }) {
+    return showModalBottomSheet(
+        context: context,
+        builder: ((context) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ...actions.map(
+                (e) => ActionView(e: e),
+              ),
+            ],
+          );
+        }));
   }
 }

@@ -1,21 +1,11 @@
 import 'package:daily_routine_app/src/constan/size.dart';
+import 'package:daily_routine_app/src/home/action_view.dart';
 import 'package:daily_routine_app/src/home/util_view.dart';
 import 'package:daily_routine_app/src/models/task_model.dart';
 import 'package:daily_routine_app/src/task/controller/task_controller.dart';
 import 'package:daily_routine_app/src/widgets/touchable_opacity.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-class _ActionItem {
-  String text;
-  IconData icon;
-  VoidCallback onPress;
-  _ActionItem({
-    required this.text,
-    required this.icon,
-    required this.onPress,
-  });
-}
 
 class TaskView extends StatefulWidget {
   const TaskView({
@@ -47,7 +37,7 @@ class _TaskViewState extends State<TaskView> {
     final taskState = context.read<TaskController>();
 
     final actions = [
-      _ActionItem(
+      ActionViewProps(
         text: "Delete",
         icon: Icons.delete,
         onPress: () {
@@ -57,7 +47,7 @@ class _TaskViewState extends State<TaskView> {
               );
         },
       ),
-      _ActionItem(
+      ActionViewProps(
         text: "Edit",
         icon: Icons.edit,
         onPress: () {
@@ -69,27 +59,6 @@ class _TaskViewState extends State<TaskView> {
         },
       ),
     ];
-
-    Widget action(_ActionItem e) {
-      return TouchableOpacity(
-        onTap: e.onPress,
-        child: Card(
-          margin: const EdgeInsets.all(KSize.s8),
-          child: Padding(
-            padding: const EdgeInsets.all(KSize.s16),
-            child: Row(
-              children: [
-                Icon(e.icon),
-                const SizedBox(
-                  width: KSize.s8,
-                ),
-                Text(e.text)
-              ],
-            ),
-          ),
-        ),
-      );
-    }
 
     final body = Card(
       margin: const EdgeInsets.symmetric(
@@ -128,16 +97,7 @@ class _TaskViewState extends State<TaskView> {
 
     return TouchableOpacity(
       onLongPress: () {
-        showModalBottomSheet(
-            context: context,
-            builder: ((context) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ...actions.map((e) => action(e)).toList(),
-                ],
-              );
-            }));
+        UtilView.showActionView(context, actions: actions);
       },
       child: AnimatedOpacity(
         opacity: opacity,
