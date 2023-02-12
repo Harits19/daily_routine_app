@@ -1,9 +1,8 @@
 import 'package:daily_routine_app/src/constan/date.dart';
 import 'package:daily_routine_app/src/constan/size.dart';
-import 'package:daily_routine_app/src/home/add_task_view.dart';
 import 'package:daily_routine_app/src/home/date_row_view.dart';
 import 'package:daily_routine_app/src/home/task_view.dart';
-import 'package:daily_routine_app/src/models/task_model.dart';
+import 'package:daily_routine_app/src/home/util_view.dart';
 import 'package:daily_routine_app/src/models/time_of_day_model.dart';
 import 'package:daily_routine_app/src/task/controller/task_controller.dart';
 import 'package:daily_routine_app/src/utils/date_util.dart';
@@ -66,13 +65,7 @@ class _HomeViewState extends State<HomeView> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: AddButton(
         onPressed: () async {
-          final task = await showModalBottomSheet<TaskModel>(
-              isScrollControlled: true,
-              context: context,
-              useSafeArea: true,
-              builder: (context) {
-                return const AddTaskView();
-              });
+          final task = await UtilView.showTaskAddUpdate(context);
           if (task == null) return;
           taskRead.addTask(task);
         },
@@ -115,23 +108,18 @@ class _HomeViewState extends State<HomeView> {
               height: KSize.s16,
             ),
             Consumer<TaskController>(builder: (context, task, child) {
+              final sortedTask = [...task.data];
+              sortedTask.sort((a, b) => a.time.compareTo(b.time));
+              log.info(sortedTask);
               return Column(
                 children: [
-                  ...task.data.map(
+                  ...sortedTask.map(
                     (e) => TaskView(task: e),
                   ),
                 ],
               );
             }),
-            ...List.generate(
-              100,
-              (index) => TaskView(
-                task: TaskModel(
-                  title: 'Title',
-                  time: TimeOfDay.now(),
-                ),
-              ),
-            ),
+
             //dummy add button
             const Opacity(
               opacity: 0,

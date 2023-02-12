@@ -12,11 +12,7 @@ class PreferenceService {
   static Future<void> addTask(TaskModel task) async {
     final data = getTask();
     data.add(task);
-    final dataJson = data.map((e) => e.toJson()).toList();
-    final dataString = jsonEncode(dataJson);
-    log.info(dataString);
-
-    await ServiceInstance.prefs.setString(_keyTask, dataString);
+    await addTasks(data);
   }
 
   static List<TaskModel> getTask() {
@@ -28,5 +24,29 @@ class PreferenceService {
     return (jsonDecode(json) as List)
         .map((e) => TaskModel.fromJson(e))
         .toList();
+  }
+
+  static Future<void> deleteTask(String id) async {
+    final data = getTask();
+    data.removeWhere((element) => element.id == id);
+    await addTasks(data);
+  }
+
+  static Future<void> addTasks(List<TaskModel> tasks) async {
+    final dataJson = tasks.map((e) => e.toJson()).toList();
+    final dataString = jsonEncode(dataJson);
+    log.info(dataString);
+    await ServiceInstance.prefs.setString(_keyTask, dataString);
+  }
+
+  static Future<void> updateTask(TaskModel task) {
+    final data = getTask();
+    final index = data.indexWhere((element) {
+      log.info('element id : ${element.id}, task id : ${task.id}');
+      return element.id == task.id;
+    });
+    log.info(index);
+    data[index] = task;
+    return addTasks(data);
   }
 }

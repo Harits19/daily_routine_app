@@ -7,15 +7,18 @@ import '../constan/size.dart';
 class AddTaskView extends StatefulWidget {
   const AddTaskView({
     super.key,
+    this.task,
   });
+
+  final TaskModel? task;
 
   @override
   State<AddTaskView> createState() => _AddTaskViewState();
 }
 
 class _AddTaskViewState extends State<AddTaskView> {
-  final title = TextEditingController();
-  var time = TimeOfDay.now();
+  late final title = TextEditingController(text: widget.task?.title);
+  late var time = widget.task?.time ?? TimeOfDay.now();
 
   @override
   void dispose() {
@@ -52,6 +55,7 @@ class _AddTaskViewState extends State<AddTaskView> {
             helpText: 'Enter Task Time',
             cancelText: '',
             confirmText: '',
+            
             handleTimeChanged: (val) {
               time = val;
               setState(() {});
@@ -66,7 +70,12 @@ class _AddTaskViewState extends State<AddTaskView> {
                 ? null
                 : () {
                     Navigator.pop(
-                        context, TaskModel(time: time, title: title.text));
+                        context,
+                        TaskModel(
+                          id: widget.task?.id,
+                          time: time,
+                          title: title.text,
+                        ));
                   },
             child: const Text('Save'),
           ),

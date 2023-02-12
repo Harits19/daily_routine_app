@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 class TaskController with ChangeNotifier {
   var data = <TaskModel>[];
 
-  void addTask(TaskModel task) {
-    PreferenceService.addTask(task).then((value) {
+  Future<void> addTask(TaskModel task) {
+    return PreferenceService.addTask(task).then((value) {
       getTask();
     });
   }
@@ -14,5 +14,17 @@ class TaskController with ChangeNotifier {
   void getTask() {
     data = PreferenceService.getTask();
     notifyListeners();
+  }
+
+  Future<void> deleteTask(String id) {
+    return PreferenceService.deleteTask(id).then((value) {
+      getTask();
+    });
+  }
+
+  Future<void> updateTask(TaskModel task) {
+    return PreferenceService.updateTask(task).then((value) {
+      getTask();
+    });
   }
 }
