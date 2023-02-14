@@ -1,5 +1,8 @@
 import 'package:daily_routine_app/src/constan/k_enum.dart';
+import 'package:daily_routine_app/src/home/util_view.dart';
 import 'package:daily_routine_app/src/models/task_model.dart';
+import 'package:daily_routine_app/src/utils/logger_util.dart';
+import 'package:daily_routine_app/src/widgets/my_card.dart';
 import 'package:daily_routine_app/src/widgets/touchable_opacity.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -7,6 +10,7 @@ import 'package:intl/intl.dart';
 import '../constan/size.dart';
 
 class AddTaskView extends StatefulWidget {
+  static const name = 'add-task-view';
   const AddTaskView({
     super.key,
     this.task,
@@ -24,6 +28,8 @@ class _AddTaskViewState extends State<AddTaskView> {
   final now = DateTime.now();
   late var date = task?.date ?? now;
   late var time = TimeOfDay.fromDateTime(date);
+  late var listOfDays = task?.listOfDays;
+  final log = LoggerUtil(AddTaskView.name);
 
   @override
   void dispose() {
@@ -33,6 +39,7 @@ class _AddTaskViewState extends State<AddTaskView> {
 
   @override
   Widget build(BuildContext context) {
+    listOfDays?.sort((a, b) => a.index.compareTo(b.index));
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: KSize.s16),
@@ -63,7 +70,7 @@ class _AddTaskViewState extends State<AddTaskView> {
                   setState(() {});
                 });
               },
-              child: _Card(text: time.format(context)),
+              child: MyCard(text: time.format(context)),
             ),
             const SizedBox(
               height: KSize.s16,
@@ -81,14 +88,20 @@ class _AddTaskViewState extends State<AddTaskView> {
                   setState(() {});
                 });
               },
-              child: _Card(text: DateFormat.yMd().format(date)),
+              child: MyCard(text: DateFormat.yMd().format(date)),
             ),
             TouchableOpacity(
-              onTap: (){
-                
+              onTap: () {
+                UtilView.chooseWeekend(
+                  context,
+                  initialValue: listOfDays,
+                ).then((value) {
+                  listOfDays = value;
+                  setState(() {});
+                });
               },
-              child: _Card(
-                text: task?.listOfDays.map((e) => e.formattedName).join(','),
+              child: MyCard(
+                text: listOfDays?.map((e) => e.formattedName).join(', '),
               ),
             ),
             const Divider(),
@@ -102,9 +115,9 @@ class _AddTaskViewState extends State<AddTaskView> {
                       Navigator.pop(
                           context,
                           TaskModel(
-                            id: widget.task?.id,
+                            id: task?.id,
                             title: title.text,
-                            listOfDays: [Weekend.friday, Weekend.monday],
+                            listOfDays: listOfDays,
                             date: date.copyWith(
                               hour: time.hour,
                               minute: time.minute,
@@ -118,24 +131,6 @@ class _AddTaskViewState extends State<AddTaskView> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _Card extends StatelessWidget {
-  const _Card({
-    required this.text,
-  });
-
-  final String? text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(KSize.s16),
-        child: Text(text ?? "-"),
       ),
     );
   }

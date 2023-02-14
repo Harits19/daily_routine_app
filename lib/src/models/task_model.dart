@@ -14,8 +14,9 @@ class TaskModel {
     this.checked = false,
     required this.title,
     required this.date,
-    this.listOfDays = const [],
-  }) : id = id ?? IdUtil.idGenerator();
+    List<Weekend>? listOfDays,
+  })  : id = id ?? IdUtil.idGenerator(),
+        listOfDays = (listOfDays ?? []).toSet().toList();
 
   TaskModel.fromJson(Map<String, dynamic> json)
       : id = json["id"],
