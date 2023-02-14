@@ -80,7 +80,7 @@ class _TaskViewState extends State<TaskView> {
                           task.checked ? TextDecoration.lineThrough : null,
                     ),
                   ),
-                  Text(task.time.format(context)),
+                  Text(TimeOfDay.fromDateTime(task.date).format(context)),
                 ],
               ),
             ),

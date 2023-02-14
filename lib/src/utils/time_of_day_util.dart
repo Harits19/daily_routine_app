@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-extension TimeOfDayModel on TimeOfDay {
+extension TimeOfDayUtil on TimeOfDay {
   Map<String, dynamic> toJson() => {
         'hour': hour,
         'minute': minute,

@@ -1,4 +1,4 @@
-import 'package:daily_routine_app/src/models/daily_task_model.dart';
+import 'package:daily_routine_app/src/constan/k_enum.dart';
 
 class KDate {
   static List<String> get listOfMonths => [
@@ -18,5 +18,5 @@ class KDate {
       ];
 
   static List<String> get listOfDays =>
-      ['dummy', ...Weekend.values.map((e) => e.text)];
+      ['dummy', ...Weekend.values.map((e) => e.formattedName)];
 }

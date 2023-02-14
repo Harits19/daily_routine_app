@@ -3,7 +3,7 @@ import 'package:daily_routine_app/src/constan/size.dart';
 import 'package:daily_routine_app/src/home/date_row_view.dart';
 import 'package:daily_routine_app/src/home/task_view.dart';
 import 'package:daily_routine_app/src/home/util_view.dart';
-import 'package:daily_routine_app/src/models/time_of_day_model.dart';
+import 'package:daily_routine_app/src/utils/time_of_day_util.dart';
 import 'package:daily_routine_app/src/task/controller/task_controller.dart';
 import 'package:daily_routine_app/src/utils/date_util.dart';
 import 'package:daily_routine_app/src/utils/logger_util.dart';
@@ -109,7 +109,11 @@ class _HomeViewState extends State<HomeView> {
             ),
             Consumer<TaskController>(builder: (context, task, child) {
               final sortedTask = [...task.data];
-              sortedTask.sort((a, b) => a.time.compareTo(b.time));
+              sortedTask.sort((a, b) {
+                final aTime = TimeOfDay.fromDateTime(a.date);
+                final bTime = TimeOfDay.fromDateTime(b.date);
+                return aTime.compareTo(bTime);
+              });
               log.info(sortedTask);
               return Column(
                 children: [
