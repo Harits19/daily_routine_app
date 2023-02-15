@@ -1,4 +1,4 @@
-import 'package:daily_routine_app/src/constan/size.dart';
+import 'package:daily_routine_app/src/constan/k_size.dart';
 import 'package:flutter/material.dart';
 
 class MyCard extends Card {

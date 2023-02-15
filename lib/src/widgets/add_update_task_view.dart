@@ -1,17 +1,17 @@
 import 'package:daily_routine_app/src/enums/task_type.dart';
-import 'package:daily_routine_app/src/enums/weekend.dart';
 import 'package:daily_routine_app/src/extensions/date_format_extension.dart';
-import 'package:daily_routine_app/src/home/util_view.dart';
+import 'package:daily_routine_app/src/extensions/weekend_extension.dart';
+import 'package:daily_routine_app/src/widgets/util_view.dart';
 import 'package:daily_routine_app/src/models/task_model.dart';
-import 'package:daily_routine_app/src/utils/list_util.dart';
-import 'package:daily_routine_app/src/utils/logger_util.dart';
+import 'package:daily_routine_app/src/extensions/list_extension.dart';
+import 'package:daily_routine_app/src/utils/log_util.dart';
 import 'package:daily_routine_app/src/widgets/my_card.dart';
 import 'package:daily_routine_app/src/widgets/my_column.dart';
 import 'package:daily_routine_app/src/widgets/touchable_opacity.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../constan/size.dart';
+import '../constan/k_size.dart';
 
 class AddUpdateTaskView extends StatefulWidget {
   static const name = 'AddTaskView';
@@ -29,7 +29,7 @@ class AddUpdateTaskView extends StatefulWidget {
 class _AddUpdateTaskViewState extends State<AddUpdateTaskView> {
   late final task = widget.task;
   final now = DateTime.now();
-  final log = LoggerUtil(AddUpdateTaskView.name);
+  final log = LogUtil(AddUpdateTaskView.name);
 
   late final title = TextEditingController(text: task?.title);
   late var date = task?.date;

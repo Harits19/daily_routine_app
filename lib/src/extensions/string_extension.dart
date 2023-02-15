@@ -1,6 +1,6 @@
-import 'package:daily_routine_app/src/utils/logger_util.dart';
+import 'package:daily_routine_app/src/utils/log_util.dart';
 
-final log = LoggerUtil("StringExtension");
+final log = LogUtil("StringExtension");
 
 extension StringExtension on String {
   String get toCapitalize {
@@ -13,5 +13,9 @@ extension StringExtension on String {
     }
     log.info(newString);
     return newString.join(" ");
+  }
+
+  String get threeLetter {
+    return substring(0, 3);
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-extension TimeOfDayUtil on TimeOfDay {
+extension TimeOfDayExtension on TimeOfDay {
   Map<String, dynamic> toJson() => {
         'hour': hour,
         'minute': minute,
@@ -27,8 +27,4 @@ String addLeadingZeroIfNeeded(int value) {
     final String minuteLabel = addLeadingZeroIfNeeded(minute);
 
     return '$hourLabel:$minuteLabel';  }
-}
-
-TimeOfDay timeOfDayFromJson(Map<String, dynamic> json) {
-  return TimeOfDay(hour: json['hour'], minute: json['minute']);
 }

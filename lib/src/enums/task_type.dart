@@ -6,7 +6,6 @@ enum TaskType {
 
   @override
   String toString() {
-    print('called');
     return name.toCapitalize;
   }
 }

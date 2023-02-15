@@ -1,8 +1,8 @@
-import 'package:daily_routine_app/src/constan/size.dart';
-import 'package:daily_routine_app/src/home/action_view.dart';
-import 'package:daily_routine_app/src/home/util_view.dart';
+import 'package:daily_routine_app/src/constan/k_size.dart';
+import 'package:daily_routine_app/src/widgets/action_view.dart';
+import 'package:daily_routine_app/src/widgets/util_view.dart';
 import 'package:daily_routine_app/src/models/task_model.dart';
-import 'package:daily_routine_app/src/task/controller/task_controller.dart';
+import 'package:daily_routine_app/src/task/task_controller.dart';
 import 'package:daily_routine_app/src/widgets/touchable_opacity.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,30 +35,6 @@ class _TaskViewState extends State<TaskView> {
   Widget build(BuildContext context) {
     final task = widget.task;
     final taskState = context.read<TaskController>();
-
-    final actions = [
-      ActionViewProps(
-        text: "Delete",
-        icon: Icons.delete,
-        onPress: () {
-          if (task.id == null) return;
-          taskState.deleteTask(task.id!).then(
-                (value) => Navigator.pop(context),
-              );
-        },
-      ),
-      ActionViewProps(
-        text: "Edit",
-        icon: Icons.edit,
-        onPress: () {
-          Navigator.pop(context);
-          UtilView.showTaskAddUpdate(context, task: task).then((value) {
-            if (value == null) return;
-            taskState.updateTask(value);
-          });
-        },
-      ),
-    ];
 
     final body = Card(
       margin: const EdgeInsets.symmetric(
@@ -97,7 +73,32 @@ class _TaskViewState extends State<TaskView> {
 
     return TouchableOpacity(
       onLongPress: () {
-        UtilView.showActionView(context, actions: actions);
+        UtilView.showActionView(
+          context,
+          actions: [
+            ActionView(
+              text: "Delete",
+              icon: Icons.delete,
+              onPress: () {
+                if (task.id == null) return;
+                taskState.deleteTask(task.id!).then(
+                      (value) => Navigator.pop(context),
+                    );
+              },
+            ),
+            ActionView(
+              text: "Edit",
+              icon: Icons.edit,
+              onPress: () {
+                Navigator.pop(context);
+                UtilView.showTaskAddUpdate(context, task: task).then((value) {
+                  if (value == null) return;
+                  taskState.updateTask(value);
+                });
+              },
+            ),
+          ],
+        );
       },
       child: AnimatedOpacity(
         opacity: opacity,

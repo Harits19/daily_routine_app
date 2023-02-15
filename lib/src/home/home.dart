@@ -1,34 +1,35 @@
-import 'package:daily_routine_app/src/constan/size.dart';
+import 'package:daily_routine_app/src/constan/k_size.dart';
 import 'package:daily_routine_app/src/extensions/date_time_extension.dart';
 import 'package:daily_routine_app/src/extensions/int_extension.dart';
-import 'package:daily_routine_app/src/home/task_view.dart';
-import 'package:daily_routine_app/src/home/util_view.dart';
-import 'package:daily_routine_app/src/utils/time_of_day_util.dart';
-import 'package:daily_routine_app/src/task/controller/task_controller.dart';
-import 'package:daily_routine_app/src/utils/logger_util.dart';
-import 'package:daily_routine_app/src/home/horizontal_calendar.dart';
+import 'package:daily_routine_app/src/widgets/add_button_view.dart';
+import 'package:daily_routine_app/src/home/views/task_view.dart';
+import 'package:daily_routine_app/src/widgets/util_view.dart';
+import 'package:daily_routine_app/src/extensions/time_of_day_extension.dart';
+import 'package:daily_routine_app/src/task/task_controller.dart';
+import 'package:daily_routine_app/src/utils/log_util.dart';
+import 'package:daily_routine_app/src/widgets/horizontal_calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomeView extends StatefulWidget {
+class Home extends StatefulWidget {
   static const routeName = 'home_view';
-  const HomeView({Key? key}) : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  State<Home> createState() => _HomeState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeState extends State<Home> {
   var selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
-    final log = LoggerUtil(HomeView.routeName);
+    final log = LogUtil(Home.routeName);
     final taskRead = context.read<TaskController>();
 
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: AddButton(
+      floatingActionButton: AddButtonView(
         onPressed: () async {
           final task = await UtilView.showTaskAddUpdate(context);
           if (task == null) return;
@@ -41,13 +42,14 @@ class _HomeViewState extends State<HomeView> {
             const SizedBox(
               height: KSize.s16,
             ),
-            HorizontalCalendar(
+            HorizontalCalendarView(
               selectedDate: selectedDate,
               onChangedDate: (val) {
                 selectedDate = val;
                 setState(() {});
               },
             ),
+
             const SizedBox(
               height: KSize.s16,
             ),
@@ -74,30 +76,10 @@ class _HomeViewState extends State<HomeView> {
             //dummy add button
             const Opacity(
               opacity: 0,
-              child: AddButton(),
+              child: AddButtonView(),
             )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class AddButton extends StatelessWidget {
-  const AddButton({
-    super.key,
-    this.onPressed,
-  });
-
-  final VoidCallback? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(KSize.s16),
-      child: FloatingActionButton(
-        onPressed: onPressed,
-        child: const Icon(Icons.add),
       ),
     );
   }

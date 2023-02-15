@@ -1,6 +1,6 @@
 import 'package:daily_routine_app/src/enums/weekend.dart';
 import 'package:daily_routine_app/src/utils/id_util.dart';
-import 'package:daily_routine_app/src/utils/time_of_day_util.dart';
+import 'package:daily_routine_app/src/extensions/time_of_day_extension.dart';
 import 'package:flutter/material.dart';
 
 class TaskModel {
@@ -30,7 +30,10 @@ class TaskModel {
             .map((e) => Weekend.values.byName(e))
             .toList(),
         checked = json['checked'],
-        time = timeOfDayFromJson(json['time']);
+        time = TimeOfDay(
+          hour: json['time']['hour'],
+          minute: json['time']['minute'],
+        );
 
   Map<String, dynamic> toJson() => {
         "id": id,

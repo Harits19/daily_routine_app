@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:logger/logger.dart';
 
-class LoggerUtil {
+class LogUtil {
   String name;
-  LoggerUtil(this.name);
+  LogUtil(this.name);
 
-  info(dynamic message) {
+  info(dynamic message, {String? name}) {
     final prettyLogger = Logger(
       printer: PrettyPrinter(
         printEmojis: false,
@@ -18,7 +18,7 @@ class LoggerUtil {
       //
     }
     prettyLogger.log(Level.info, {
-      "source": name,
+      "source": name ?? this.name,
       "detail": message,
     });
   }

@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:daily_routine_app/src/models/task_model.dart';
 import 'package:daily_routine_app/src/services/service_instance.dart';
-import 'package:daily_routine_app/src/utils/logger_util.dart';
+import 'package:daily_routine_app/src/utils/log_util.dart';
 
 class PreferenceService {
   static const name = "PreferenceService";
   static const _keyTask = "keyTask";
-  static final log = LoggerUtil(name);
+  static final log = LogUtil(name);
 
   static Future<void> addTask(TaskModel task) async {
     final data = getTask();
