@@ -5,11 +5,7 @@ enum Weekend {
   thursday(),
   friday(),
   saturday(),
-  sunday();
-
-
-
-}
+  sunday();}
 
 extension WeekendExtension on Weekend {
   String get formattedName {

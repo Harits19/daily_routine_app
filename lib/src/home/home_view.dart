@@ -1,11 +1,10 @@
-import 'package:daily_routine_app/src/constan/date.dart';
 import 'package:daily_routine_app/src/constan/size.dart';
-import 'package:daily_routine_app/src/home/date_row_view.dart';
+import 'package:daily_routine_app/src/extensions/date_time_extension.dart';
+import 'package:daily_routine_app/src/extensions/int_extension.dart';
 import 'package:daily_routine_app/src/home/task_view.dart';
 import 'package:daily_routine_app/src/home/util_view.dart';
 import 'package:daily_routine_app/src/utils/time_of_day_util.dart';
 import 'package:daily_routine_app/src/task/controller/task_controller.dart';
-import 'package:daily_routine_app/src/utils/date_util.dart';
 import 'package:daily_routine_app/src/utils/logger_util.dart';
 import 'package:daily_routine_app/src/home/horizontal_calendar.dart';
 import 'package:flutter/material.dart';
@@ -24,42 +23,8 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    final totalDate = DateUtil.totalDate(selectedDate);
-    final selectedMonth = selectedDate.month;
-    final selectedYear = selectedDate.year;
-    final selectedDay = selectedDate.day;
     final log = LoggerUtil(HomeView.routeName);
     final taskRead = context.read<TaskController>();
-
-    log.info(totalDate);
-    log.info(KDate.listOfMonths);
-    log.info(TimeOfDay.now().toJson());
-
-    DateTime getNextDay(DateTime nextDate) {
-      var changedDay = selectedDay;
-      log.info('next month before ${nextDate.month}');
-      var totalDayChangedMonth = DateUtil.totalDate(nextDate);
-      if (changedDay > totalDayChangedMonth) {
-        changedDay = totalDayChangedMonth;
-      }
-      log.info(
-          'total day next month : $totalDayChangedMonth, current month ${selectedDate.month},  next month ${nextDate.month} ');
-
-      return nextDate.copyWith(day: changedDay);
-    }
-
-    void changeMonth(int many) {
-      log.info('selected month $selectedMonth. many $many');
-      final nextDate = DateTime(selectedYear, selectedMonth + many);
-      selectedDate = getNextDay(nextDate);
-      setState(() {});
-    }
-
-    void changeYear(int many) {
-      final nextDate = DateTime(selectedYear + many, selectedMonth);
-      selectedDate = getNextDay(nextDate);
-      setState(() {});
-    }
 
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -73,27 +38,6 @@ class _HomeViewState extends State<HomeView> {
       body: SafeArea(
         child: ListView(
           children: [
-            const SizedBox(
-              height: KSize.s16,
-            ),
-            DateRowView(
-              text: selectedYear.toString(),
-              onTapLeft: () {
-                changeYear(-1);
-              },
-              onTapRight: () {
-                changeYear(1);
-              },
-            ),
-            DateRowView(
-              text: KDate.listOfMonths[selectedMonth],
-              onTapLeft: () {
-                changeMonth(-1);
-              },
-              onTapRight: () {
-                changeMonth(1);
-              },
-            ),
             const SizedBox(
               height: KSize.s16,
             ),
@@ -112,10 +56,15 @@ class _HomeViewState extends State<HomeView> {
               sortedTask.sort((a, b) {
                 return a.time.compareTo(b.time);
               });
+              final filteredTask = sortedTask.where((element) {
+                return element.listOfDays
+                        .contains(selectedDate.weekday.toWeekend) ||
+                    element.date.isSameDate(selectedDate);
+              });
               log.info(sortedTask);
               return Column(
                 children: [
-                  ...sortedTask.map(
+                  ...filteredTask.map(
                     (e) => TaskView(task: e),
                   ),
                 ],

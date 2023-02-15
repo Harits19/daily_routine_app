@@ -55,7 +55,11 @@ class _AddUpdateTaskViewState extends State<AddUpdateTaskView> {
     listOfDays.sort((a, b) => a.index.compareTo(b.index));
 
     final checkRecurringTask = isRecurringTask ? !listOfDays.isNullEmpty : true;
-    final buttonEnable = title.text.isNotEmpty && checkRecurringTask;
+    final checkSingleTask = isSingleTask ? date != null : true;
+    final buttonEnable = taskType != null &&
+        title.text.isNotEmpty &&
+        checkRecurringTask &&
+        checkSingleTask;
     final paddingKeyboard = MediaQuery.of(context).viewInsets.bottom;
 
     return SingleChildScrollView(
