@@ -6,15 +6,20 @@ class LoggerUtil {
   String name;
   LoggerUtil(this.name);
 
-   info(dynamic message) {
+  info(dynamic message) {
     final prettyLogger = Logger(
-      printer: PrettyPrinter(),
+      printer: PrettyPrinter(
+        printEmojis: false,
+      ),
     );
     try {
       message = jsonDecode(message);
     } catch (e) {
-      // 
+      //
     }
-    prettyLogger.log(Level.verbose, message);
+    prettyLogger.log(Level.info, {
+      "source": name,
+      "detail": message,
+    });
   }
 }

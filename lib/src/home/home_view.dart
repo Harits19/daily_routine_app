@@ -110,9 +110,7 @@ class _HomeViewState extends State<HomeView> {
             Consumer<TaskController>(builder: (context, task, child) {
               final sortedTask = [...task.data];
               sortedTask.sort((a, b) {
-                final aTime = TimeOfDay.fromDateTime(a.date);
-                final bTime = TimeOfDay.fromDateTime(b.date);
-                return aTime.compareTo(bTime);
+                return a.time.compareTo(b.time);
               });
               log.info(sortedTask);
               return Column(

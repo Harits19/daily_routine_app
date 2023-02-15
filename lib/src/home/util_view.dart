@@ -1,9 +1,10 @@
-import 'package:daily_routine_app/src/constan/k_enum.dart';
+import 'package:daily_routine_app/src/enums/weekend.dart';
 import 'package:daily_routine_app/src/constan/size.dart';
 import 'package:daily_routine_app/src/home/action_view.dart';
 import 'package:daily_routine_app/src/home/add_task_view.dart';
 import 'package:daily_routine_app/src/models/task_model.dart';
 import 'package:daily_routine_app/src/widgets/my_card.dart';
+import 'package:daily_routine_app/src/widgets/my_column.dart';
 import 'package:daily_routine_app/src/widgets/touchable_opacity.dart';
 import 'package:flutter/material.dart';
 
@@ -51,7 +52,8 @@ class UtilView {
         return StatefulBuilder(builder: (context, localState) {
           return Padding(
             padding: const EdgeInsets.all(KSize.s16),
-            child: Column(
+            child: MyColumn(
+              insetsPadding: KSize.s16,
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -87,9 +89,6 @@ class UtilView {
           );
         });
       },
-    ).then((value) {
-      if (value == null) return initialValue;
-      return value;
-    });
+    );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:daily_routine_app/src/constan/k_enum.dart';
+import 'package:daily_routine_app/src/enums/weekend.dart';
 
 class KDate {
   static List<String> get listOfMonths => [
