@@ -35,6 +35,9 @@ class _TaskViewState extends State<TaskView> {
   Widget build(BuildContext context) {
     final task = widget.task;
     final taskState = context.read<TaskController>();
+    checked(bool? val) {
+      taskState.updateTask(task.copyWith(checked: val));
+    }
 
     final body = Card(
       margin: const EdgeInsets.symmetric(
@@ -63,7 +66,7 @@ class _TaskViewState extends State<TaskView> {
             Checkbox(
               value: task.checked,
               onChanged: (val) {
-                taskState.updateTask(task.copyWith(checked: val));
+                checked(val);
               },
             ),
           ],
@@ -72,6 +75,9 @@ class _TaskViewState extends State<TaskView> {
     );
 
     return TouchableOpacity(
+      onTap: () {
+        checked(!task.checked);
+      },
       onLongPress: () {
         UtilView.showActionView(
           context,

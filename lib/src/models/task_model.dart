@@ -45,16 +45,14 @@ class TaskModel {
       };
 
   TaskModel copyWith({
-    String? title,
-    TimeOfDay? time,
     bool? checked,
-    DateTime? date,
   }) {
     return TaskModel(
-        title: title ?? this.title,
+        title: title,
         checked: checked ?? this.checked,
-        date: date ?? this.date,
-        time: time ?? this.time,
+        date: date,
+        time: time,
+        listOfDays: listOfDays,
         id: id);
   }
 }

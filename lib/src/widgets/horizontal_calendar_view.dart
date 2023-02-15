@@ -24,12 +24,12 @@ class HorizontalCalendarView extends StatefulWidget {
 class _HorizontalCalendarViewState extends State<HorizontalCalendarView> {
   final controller = ItemScrollController();
   final alignment = 0.4;
-  late final selectedDate = widget.selectedDate;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final selectedDate = widget.selectedDate;
       controller.jumpTo(index: (selectedDate.day - 1), alignment: alignment);
     });
   }
@@ -44,6 +44,7 @@ class _HorizontalCalendarViewState extends State<HorizontalCalendarView> {
 
   @override
   Widget build(BuildContext context) {
+    final selectedDate = widget.selectedDate;
     final totalDate = selectedDate.totalDate;
     final selectedMonth = selectedDate.month;
     final selectedYear = selectedDate.year;
@@ -107,8 +108,8 @@ class _HorizontalCalendarViewState extends State<HorizontalCalendarView> {
           padding: const EdgeInsets.symmetric(horizontal: KSize.s16),
           child: ElevatedButton(
             onPressed: () {
+              scrollTo(DateTime.now().day - 1);
               widget.onChangedDate(DateTime.now());
-              scrollTo(selectedDate.day - 1);
             },
             child: const Text('To Current Date'),
           ),
