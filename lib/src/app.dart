@@ -1,3 +1,4 @@
+import 'package:daily_routine_app/src/checked_task/checked_task_controller.dart';
 import 'package:daily_routine_app/src/home/home.dart';
 import 'package:daily_routine_app/src/theme/theme_controller.dart';
 import 'package:daily_routine_app/src/task/task_controller.dart';
@@ -25,6 +26,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => ThemeController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CheckedTaskController()..getListCheckedTask(),
         ),
       ],
       child: Consumer<ThemeController>(builder: (context, theme, child) {

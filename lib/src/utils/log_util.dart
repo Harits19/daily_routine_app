@@ -6,7 +6,7 @@ class LogUtil {
   String name;
   LogUtil(this.name);
 
-  info(dynamic message, {String? name}) {
+  info(dynamic message, {String? key}) {
     final prettyLogger = Logger(
       printer: PrettyPrinter(
         printEmojis: false,
@@ -18,7 +18,8 @@ class LogUtil {
       //
     }
     prettyLogger.log(Level.info, {
-      "source": name ?? this.name,
+      "source": name,
+      "key": key,
       "detail": message,
     });
   }

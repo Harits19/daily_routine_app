@@ -4,8 +4,8 @@ import 'package:daily_routine_app/src/models/task_model.dart';
 import 'package:daily_routine_app/src/services/service_instance.dart';
 import 'package:daily_routine_app/src/utils/log_util.dart';
 
-class PreferenceService {
-  static const name = "PreferenceService";
+class PrefTaskService {
+  static const name = "PrefTaskService";
   static const _keyTask = "keyTask";
   static final log = LogUtil(name);
 

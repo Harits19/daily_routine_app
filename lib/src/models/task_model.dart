@@ -4,17 +4,15 @@ import 'package:daily_routine_app/src/extensions/time_of_day_extension.dart';
 import 'package:flutter/material.dart';
 
 class TaskModel {
-  String? id;
-  String title;
-  bool checked;
-  DateTime? date;
-  List<Weekend> listOfDays;
-  TimeOfDay time;
+  final String id;
+  final String title;
+  final DateTime? date;
+  final List<Weekend> listOfDays;
+  final TimeOfDay time;
 
   TaskModel({
     required this.time,
     required this.title,
-    this.checked = false,
     this.date,
     String? id,
     List<Weekend>? listOfDays,
@@ -29,7 +27,6 @@ class TaskModel {
         listOfDays = (json['list_of_days'] as List)
             .map((e) => Weekend.values.byName(e))
             .toList(),
-        checked = json['checked'],
         time = TimeOfDay(
           hour: json['time']['hour'],
           minute: json['time']['minute'],
@@ -39,7 +36,6 @@ class TaskModel {
         "id": id,
         'title': title,
         'date': date.toString(),
-        'checked': checked,
         'list_of_days': listOfDays.map((e) => e.name).toList(),
         'time': time.toJson(),
       };
@@ -49,7 +45,6 @@ class TaskModel {
   }) {
     return TaskModel(
         title: title,
-        checked: checked ?? this.checked,
         date: date,
         time: time,
         listOfDays: listOfDays,

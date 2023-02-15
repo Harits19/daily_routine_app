@@ -63,11 +63,16 @@ class _HomeState extends State<Home> {
                         .contains(selectedDate.weekday.toWeekend) ||
                     element.date.isSameDate(selectedDate);
               });
-              log.info(sortedTask);
+              final checkable = selectedDate.isSameDate(
+                DateTime.now(),
+              );
               return Column(
                 children: [
                   ...filteredTask.map(
-                    (e) => TaskView(task: e),
+                    (e) => TaskView(
+                      task: e,
+                      checkable: checkable,
+                    ),
                   ),
                 ],
               );
