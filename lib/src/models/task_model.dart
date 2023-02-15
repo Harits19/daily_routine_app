@@ -9,10 +9,12 @@ class TaskModel {
   final DateTime? date;
   final List<Weekend> listOfDays;
   final TimeOfDay time;
+  final bool isDeleted;
 
   TaskModel({
     required this.time,
     required this.title,
+    this.isDeleted = false,
     this.date,
     String? id,
     List<Weekend>? listOfDays,
@@ -23,14 +25,14 @@ class TaskModel {
       : id = json["id"],
         title = json['title'],
         date = DateTime.tryParse(json['date']),
-        // listOfDays = [],
         listOfDays = (json['list_of_days'] as List)
             .map((e) => Weekend.values.byName(e))
             .toList(),
         time = TimeOfDay(
           hour: json['time']['hour'],
           minute: json['time']['minute'],
-        );
+        ),
+        isDeleted = json["is_deleted"] ?? false;
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -38,17 +40,20 @@ class TaskModel {
         'date': date.toString(),
         'list_of_days': listOfDays.map((e) => e.name).toList(),
         'time': time.toJson(),
+        'is_deleted': isDeleted,
       };
 
   TaskModel copyWith({
-    bool? checked,
+    bool? isDeleted,
   }) {
     return TaskModel(
-        title: title,
-        date: date,
-        time: time,
-        listOfDays: listOfDays,
-        id: id);
+      title: title,
+      date: date,
+      time: time,
+      listOfDays: listOfDays,
+      id: id,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
   }
 
   bool get isSingle {

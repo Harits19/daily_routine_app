@@ -19,8 +19,6 @@ class CheckedTaskModel {
       };
 
   bool isSameWith(CheckedTaskModel other) {
-    print(
-        "isSameWith : $idTask ${other.idTask} $date ${other.date} ${date.isSameDate(other.date)}");
     return idTask == other.idTask && date.isSameDate(other.date);
   }
 }

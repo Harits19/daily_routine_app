@@ -26,12 +26,6 @@ class PrefTaskService {
         .toList();
   }
 
-  static Future<void> deleteTask(String id) async {
-    final data = getTask();
-    data.removeWhere((element) => element.id == id);
-    await addTasks(data);
-  }
-
   static Future<void> addTasks(List<TaskModel> tasks) async {
     final dataJson = tasks.map((e) => e.toJson()).toList();
     final dataString = jsonEncode(dataJson);

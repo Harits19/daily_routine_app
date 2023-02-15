@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class TaskController with ChangeNotifier {
   var data = <TaskModel>[];
+  var archiveData = <TaskModel>[];
 
   Future<void> addTask(TaskModel task) {
     return PrefTaskService.addTask(task).then((value) {
@@ -12,12 +13,18 @@ class TaskController with ChangeNotifier {
   }
 
   void getTask() {
-    data = PrefTaskService.getTask();
+    archiveData = PrefTaskService.getTask();
+    data = List.from(archiveData)..removeWhere((element) => element.isDeleted);
     notifyListeners();
   }
 
   Future<void> deleteTask(String id) {
-    return PrefTaskService.deleteTask(id).then((value) {
+    final task = data.firstWhere(
+      (element) => element.id == id,
+    );
+    return updateTask(task.copyWith(
+      isDeleted: true,
+    )).then((value) {
       getTask();
     });
   }
