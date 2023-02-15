@@ -1,5 +1,6 @@
 import 'package:daily_routine_app/src/enums/task_type.dart';
 import 'package:daily_routine_app/src/enums/weekend.dart';
+import 'package:daily_routine_app/src/extensions/date_format_extension.dart';
 import 'package:daily_routine_app/src/home/util_view.dart';
 import 'package:daily_routine_app/src/models/task_model.dart';
 import 'package:daily_routine_app/src/utils/list_util.dart';
@@ -12,9 +13,9 @@ import 'package:intl/intl.dart';
 
 import '../constan/size.dart';
 
-class AddTaskView extends StatefulWidget {
-  static const name = 'add-task-view';
-  const AddTaskView({
+class AddUpdateTaskView extends StatefulWidget {
+  static const name = 'AddTaskView';
+  const AddUpdateTaskView({
     super.key,
     this.task,
   });
@@ -22,18 +23,23 @@ class AddTaskView extends StatefulWidget {
   final TaskModel? task;
 
   @override
-  State<AddTaskView> createState() => _AddTaskViewState();
+  State<AddUpdateTaskView> createState() => _AddUpdateTaskViewState();
 }
 
-class _AddTaskViewState extends State<AddTaskView> {
+class _AddUpdateTaskViewState extends State<AddUpdateTaskView> {
   late final task = widget.task;
-  late final title = TextEditingController(text: task?.title);
   final now = DateTime.now();
-  late var date = task?.date ?? now;
-  late var time = TimeOfDay.fromDateTime(date);
+  final log = LoggerUtil(AddUpdateTaskView.name);
+
+  late final title = TextEditingController(text: task?.title);
+  late var date = task?.date;
+  late var time = task?.time ?? TimeOfDay.now();
   late var listOfDays = task?.listOfDays ?? [];
-  final log = LoggerUtil(AddTaskView.name);
-  TaskType? taskType;
+  late var taskType = !listOfDays.isNullEmpty
+      ? TaskType.recurring
+      : date != null
+          ? TaskType.single
+          : null;
 
   @override
   void dispose() {
@@ -49,8 +55,7 @@ class _AddTaskViewState extends State<AddTaskView> {
     listOfDays.sort((a, b) => a.index.compareTo(b.index));
 
     final checkRecurringTask = isRecurringTask ? !listOfDays.isNullEmpty : true;
-    final buttonEnable =
-        title.text.isNotEmpty && taskType != null && checkRecurringTask;
+    final buttonEnable = title.text.isNotEmpty && checkRecurringTask;
     final paddingKeyboard = MediaQuery.of(context).viewInsets.bottom;
 
     return SingleChildScrollView(
@@ -117,7 +122,9 @@ class _AddTaskViewState extends State<AddTaskView> {
                       setState(() {});
                     });
                   },
-                  child: MyCard(text: DateFormat.yMd().format(date)),
+                  child: MyCard(
+                    text: DateFormat.yMd().tryFormat(date),
+                  ),
                 ),
               if (isRecurringTask)
                 TouchableOpacity(

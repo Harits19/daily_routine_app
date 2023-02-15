@@ -1,7 +1,7 @@
 import 'package:daily_routine_app/src/enums/weekend.dart';
 import 'package:daily_routine_app/src/constan/size.dart';
 import 'package:daily_routine_app/src/home/action_view.dart';
-import 'package:daily_routine_app/src/home/add_task_view.dart';
+import 'package:daily_routine_app/src/home/add_update_task_view.dart';
 import 'package:daily_routine_app/src/models/task_model.dart';
 import 'package:daily_routine_app/src/widgets/my_card.dart';
 import 'package:daily_routine_app/src/widgets/my_column.dart';
@@ -16,7 +16,7 @@ class UtilView {
         context: context,
         useSafeArea: true,
         builder: (context) {
-          return AddTaskView(
+          return AddUpdateTaskView(
             task: task,
           );
         });

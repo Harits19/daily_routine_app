@@ -12,12 +12,12 @@ class TaskModel {
   TimeOfDay time;
 
   TaskModel({
-    String? id,
-    this.checked = false,
-    required this.title,
-    this.date,
-    List<Weekend>? listOfDays,
     required this.time,
+    required this.title,
+    this.checked = false,
+    this.date,
+    String? id,
+    List<Weekend>? listOfDays,
   })  : id = id ?? IdUtil.idGenerator(),
         listOfDays = (listOfDays ?? []).toSet().toList();
 
