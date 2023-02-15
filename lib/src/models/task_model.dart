@@ -55,4 +55,12 @@ class TaskModel {
         listOfDays: listOfDays,
         id: id);
   }
+
+  bool get isSingle {
+    return date != null;
+  }
+
+  bool get isRecurring {
+    return !isSingle;
+  }
 }

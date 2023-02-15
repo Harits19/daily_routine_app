@@ -1,5 +1,7 @@
 import 'package:daily_routine_app/src/constan/k_size.dart';
+import 'package:daily_routine_app/src/extensions/weekend_extension.dart';
 import 'package:daily_routine_app/src/widgets/action_view.dart';
+import 'package:daily_routine_app/src/widgets/my_column.dart';
 import 'package:daily_routine_app/src/widgets/util_view.dart';
 import 'package:daily_routine_app/src/models/task_model.dart';
 import 'package:daily_routine_app/src/task/task_controller.dart';
@@ -49,7 +51,8 @@ class _TaskViewState extends State<TaskView> {
         child: Row(
           children: [
             Expanded(
-              child: Column(
+              child: MyColumn(
+                insetsPadding: KSize.s8,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
@@ -59,7 +62,21 @@ class _TaskViewState extends State<TaskView> {
                           task.checked ? TextDecoration.lineThrough : null,
                     ),
                   ),
-                  Text(task.time.format(context)),
+                  Text(
+                    task.time.format(context),
+                    style: const TextStyle(
+                      fontSize: KSize.s12,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  if (task.isRecurring)
+                    Text(
+                      task.listOfDays.map((e) => e.formattedName).join(', '),
+                      style: const TextStyle(
+                        fontSize: KSize.s8,
+                        color: Colors.blueGrey,
+                      ),
+                    ),
                 ],
               ),
             ),
