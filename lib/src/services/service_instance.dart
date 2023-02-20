@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class ServiceInstance {
   static SharedPreferences? _prefs;
@@ -8,7 +9,7 @@ class ServiceInstance {
   }
 
   static SharedPreferences get prefs {
-    if (_prefs == null) throw Exception("prefs Locator not initialized");
+    if (_prefs == null) throw Exception("prefs not initialized");
     return _prefs!;
   }
 }

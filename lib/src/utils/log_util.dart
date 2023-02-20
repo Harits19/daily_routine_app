@@ -24,3 +24,7 @@ class LogUtil {
     });
   }
 }
+
+void myPrint(dynamic message) {
+  LogUtil('default').info(message);
+}

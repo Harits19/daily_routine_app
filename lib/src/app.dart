@@ -1,6 +1,6 @@
 import 'package:daily_routine_app/src/checked_task/checked_task_controller.dart';
 import 'package:daily_routine_app/src/home/home.dart';
-import 'package:daily_routine_app/src/theme/theme_controller.dart';
+import 'package:daily_routine_app/src/app/app_controller.dart';
 import 'package:daily_routine_app/src/task/task_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -25,13 +25,13 @@ class MyApp extends StatelessWidget {
           create: (_) => TaskController()..getTask(),
         ),
         ChangeNotifierProvider(
-          create: (_) => ThemeController(),
+          create: (_) => AppController()..initApp(),
         ),
         ChangeNotifierProvider(
           create: (_) => CheckedTaskController()..getListCheckedTask(),
         ),
       ],
-      child: Consumer<ThemeController>(builder: (context, theme, child) {
+      child: Consumer<AppController>(builder: (context, theme, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           // Providing a restorationScopeId allows the Navigator built by the
