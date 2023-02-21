@@ -26,7 +26,7 @@ class CheckedTaskController with ChangeNotifier {
 
   Future<void> import() {
     return PathProviderService.import().then((value) async {
-      if (value == null) throw Exception("Failed to import");
+      if (value == null) return;
       addCheckedTasks(value.checkedTasks);
       taskController?.addTasks(value.tasks);
     });
