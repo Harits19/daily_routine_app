@@ -1,17 +1,17 @@
 import 'package:daily_routine_app/src/constan/k_size.dart';
 import 'package:flutter/material.dart';
 
-Future<bool> confirmImportDialog(BuildContext context) async {
-  final confirmImport = await showDialog<bool>(
-    context: context,
-    builder: (context) {
-      return const ConfirmImportView();
-    },
-  );
-  return confirmImport ?? false;
-}
-
 class ConfirmImportView extends StatelessWidget {
+  static Future<bool> show(BuildContext context) async {
+    final confirmImport = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return const ConfirmImportView();
+      },
+    );
+    return confirmImport ?? false;
+  }
+
   const ConfirmImportView({super.key});
 
   @override

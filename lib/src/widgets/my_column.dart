@@ -10,14 +10,13 @@ class MyColumn extends Column {
     super.textBaseline,
     super.textDirection,
     super.verticalDirection,
-    double insetsPadding = 0,
+    double spacing = 0,
   }) : super(
-    children: List.generate(children.length, (index) {
-      final isFirst = index == 0;
-      return Padding(
-        padding: EdgeInsets.only(top: isFirst ? 0 : insetsPadding),
-        child: children[index],
-      );
-    })
-  );
+            children: List.generate(children.length, (index) {
+          final isFirst = index == 0;
+          return Padding(
+            padding: EdgeInsets.only(top: isFirst ? 0 : spacing),
+            child: children[index],
+          );
+        }));
 }

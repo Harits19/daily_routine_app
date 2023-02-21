@@ -5,8 +5,8 @@ import 'package:daily_routine_app/src/extensions/date_time_extension.dart';
 import 'package:daily_routine_app/src/extensions/int_extension.dart';
 import 'package:daily_routine_app/src/widgets/add_button_view.dart';
 import 'package:daily_routine_app/src/home/views/task_view.dart';
+import 'package:daily_routine_app/src/widgets/add_update_task_view.dart';
 import 'package:daily_routine_app/src/widgets/confirm_import_view.dart';
-import 'package:daily_routine_app/src/widgets/util_view.dart';
 import 'package:daily_routine_app/src/extensions/time_of_day_extension.dart';
 import 'package:daily_routine_app/src/task/task_controller.dart';
 import 'package:daily_routine_app/src/utils/log_util.dart';
@@ -35,7 +35,7 @@ class _HomeState extends State<Home> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: AddButtonView(
         onPressed: () async {
-          final task = await UtilView.showTaskAddUpdate(context);
+          final task = await AddUpdateTaskView.show(context);
           if (task == null) return;
           taskRead.addTask(task);
         },
@@ -50,7 +50,7 @@ class _HomeState extends State<Home> {
               children: [
                 TextButton(
                   onPressed: () async {
-                    final confirmImport = await confirmImportDialog(context);
+                    final confirmImport = await ConfirmImportView.show(context);
                     if (confirmImport) {
                       checkedTaskRead.import();
                     }

@@ -5,6 +5,7 @@ import 'package:daily_routine_app/src/models/checked_task_model.dart';
 import 'package:daily_routine_app/src/task/task_controller.dart';
 import 'package:daily_routine_app/src/utils/log_util.dart';
 import 'package:daily_routine_app/src/widgets/action_view.dart';
+import 'package:daily_routine_app/src/widgets/add_update_task_view.dart';
 import 'package:daily_routine_app/src/widgets/my_column.dart';
 import 'package:daily_routine_app/src/widgets/util_view.dart';
 import 'package:daily_routine_app/src/models/task_model.dart';
@@ -91,7 +92,7 @@ class _TaskViewState extends State<TaskView> {
                 icon: Icons.edit,
                 onPress: () {
                   Navigator.pop(context);
-                  UtilView.showTaskAddUpdate(context, task: task).then((value) {
+                  AddUpdateTaskView.show(context, task: task).then((value) {
                     if (value == null) return;
                     taskState.updateTask(value);
                   });
@@ -114,7 +115,7 @@ class _TaskViewState extends State<TaskView> {
                 children: [
                   Expanded(
                     child: MyColumn(
-                      insetsPadding: KSize.s8,
+                      spacing: KSize.s8,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(

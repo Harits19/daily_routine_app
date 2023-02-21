@@ -1,6 +1,7 @@
 import 'package:daily_routine_app/src/enums/task_type.dart';
 import 'package:daily_routine_app/src/extensions/date_format_extension.dart';
 import 'package:daily_routine_app/src/extensions/weekend_extension.dart';
+import 'package:daily_routine_app/src/widgets/dropdown_modal_view.dart';
 import 'package:daily_routine_app/src/widgets/util_view.dart';
 import 'package:daily_routine_app/src/models/task_model.dart';
 import 'package:daily_routine_app/src/extensions/list_extension.dart';
@@ -14,6 +15,18 @@ import 'package:intl/intl.dart';
 import '../constan/k_size.dart';
 
 class AddUpdateTaskView extends StatefulWidget {
+  static Future<TaskModel?> show(BuildContext context, {TaskModel? task}) {
+    return showModalBottomSheet<TaskModel>(
+        isScrollControlled: true,
+        context: context,
+        useSafeArea: true,
+        builder: (context) {
+          return AddUpdateTaskView(
+            task: task,
+          );
+        });
+  }
+
   static const name = 'AddTaskView';
   const AddUpdateTaskView({
     super.key,
@@ -74,7 +87,7 @@ class _AddUpdateTaskViewState extends State<AddUpdateTaskView> {
             height: KSize.s24,
           ),
           MyColumn(
-            insetsPadding: KSize.s16,
+            spacing: KSize.s16,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -96,7 +109,7 @@ class _AddUpdateTaskViewState extends State<AddUpdateTaskView> {
                 },
                 child: MyCard(text: time.format(context)),
               ),
-              DropdownButton<TaskType>(
+              DropdownModalView<TaskType>(
                 value: taskType,
                 isExpanded: true,
                 items: [

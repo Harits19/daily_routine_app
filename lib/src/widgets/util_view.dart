@@ -10,19 +10,6 @@ import 'package:daily_routine_app/src/widgets/touchable_opacity.dart';
 import 'package:flutter/material.dart';
 
 class UtilView {
-  static Future<TaskModel?> showTaskAddUpdate(BuildContext context,
-      {TaskModel? task}) {
-    return showModalBottomSheet<TaskModel>(
-        isScrollControlled: true,
-        context: context,
-        useSafeArea: true,
-        builder: (context) {
-          return AddUpdateTaskView(
-            task: task,
-          );
-        });
-  }
-
   static Future<void> showActionView(
     BuildContext context, {
     required List<ActionView> actions,
@@ -54,7 +41,7 @@ class UtilView {
           return Padding(
             padding: const EdgeInsets.all(KSize.s16),
             child: MyColumn(
-              insetsPadding: KSize.s16,
+              spacing: KSize.s16,
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
