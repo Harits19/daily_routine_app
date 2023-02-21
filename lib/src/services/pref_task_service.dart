@@ -20,7 +20,6 @@ class PrefTaskService {
     if (json == null) {
       return [];
     }
-    log.info(json);
     return (jsonDecode(json) as List)
         .map((e) => TaskModel.fromJson(e))
         .toList();
@@ -29,7 +28,6 @@ class PrefTaskService {
   static Future<void> addTasks(List<TaskModel> tasks) async {
     final dataJson = tasks.map((e) => e.toJson()).toList();
     final dataString = jsonEncode(dataJson);
-    log.info(dataString);
     await ServiceInstance.prefs.setString(_keyTask, dataString);
   }
 

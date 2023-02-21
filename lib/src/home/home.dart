@@ -5,6 +5,7 @@ import 'package:daily_routine_app/src/extensions/date_time_extension.dart';
 import 'package:daily_routine_app/src/extensions/int_extension.dart';
 import 'package:daily_routine_app/src/widgets/add_button_view.dart';
 import 'package:daily_routine_app/src/home/views/task_view.dart';
+import 'package:daily_routine_app/src/widgets/confirm_import_view.dart';
 import 'package:daily_routine_app/src/widgets/util_view.dart';
 import 'package:daily_routine_app/src/extensions/time_of_day_extension.dart';
 import 'package:daily_routine_app/src/task/task_controller.dart';
@@ -48,8 +49,11 @@ class _HomeState extends State<Home> {
             Row(
               children: [
                 TextButton(
-                  onPressed: () {
-                    checkedTaskRead.import();
+                  onPressed: () async {
+                    final confirmImport = await confirmImportDialog(context);
+                    if (confirmImport) {
+                      checkedTaskRead.import();
+                    }
                   },
                   child: const Text('Import'),
                 ),
