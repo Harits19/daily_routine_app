@@ -27,9 +27,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => AppController()..initApp(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => CheckedTaskController()..getListCheckedTask(),
-        ),
+        ChangeNotifierProxyProvider<TaskController, CheckedTaskController>(
+          create: (_) => CheckedTaskController(),
+          update: (_, myModel, myNotifier) =>
+              (myNotifier ?? (CheckedTaskController()..getListCheckedTask()))
+                ..getListCheckedTask()
+                ..update(myModel),
+        )
       ],
       child: Consumer<AppController>(builder: (context, theme, child) {
         return MaterialApp(

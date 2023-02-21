@@ -6,7 +6,7 @@ import 'package:daily_routine_app/src/utils/log_util.dart';
 
 class PrefCheckedTaskService {
   static const name = "PrefCheckedTaskService";
-  static const _keyTask = "keyCheckedTask";
+  static const _keyCheckedTask = "keyCheckedTask";
   static final log = LogUtil(name);
 
   static Future<void> addCheckedTask(CheckedTaskModel checkedTask) async {
@@ -17,7 +17,7 @@ class PrefCheckedTaskService {
   }
 
   static List<CheckedTaskModel> getListCheckedTask() {
-    final json = ServiceInstance.prefs.getString(_keyTask);
+    final json = ServiceInstance.prefs.getString(_keyCheckedTask);
     if (json == null) {
       return [];
     }
@@ -37,6 +37,6 @@ class PrefCheckedTaskService {
     final dataJson = listCheckedTask.map((e) => e.toJson()).toList();
     final dataString = jsonEncode(dataJson);
     log.info(dataString);
-    await ServiceInstance.prefs.setString(_keyTask, dataString);
+    await ServiceInstance.prefs.setString(_keyCheckedTask, dataString);
   }
 }

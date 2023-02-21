@@ -1,4 +1,5 @@
 import 'package:daily_routine_app/src/app/app_controller.dart';
+import 'package:daily_routine_app/src/checked_task/checked_task_controller.dart';
 import 'package:daily_routine_app/src/constan/k_size.dart';
 import 'package:daily_routine_app/src/extensions/date_time_extension.dart';
 import 'package:daily_routine_app/src/extensions/int_extension.dart';
@@ -27,6 +28,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final log = LogUtil(Home.routeName);
     final taskRead = context.read<TaskController>();
+    final checkedTaskRead = context.read<CheckedTaskController>();
 
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -43,13 +45,31 @@ class _HomeState extends State<Home> {
             const SizedBox(
               height: KSize.s16,
             ),
-            Consumer<AppController>(builder: (context, state, child) {
-              return Text(
-                "version ${state.packageInfo?.version}",
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: KSize.s8),
-              );
-            }),
+            Row(
+              children: [
+                TextButton(
+                  onPressed: () {
+                    checkedTaskRead.import();
+                  },
+                  child: const Text('Import'),
+                ),
+                Consumer<AppController>(builder: (context, state, child) {
+                  return Expanded(
+                    child: Text(
+                      "version ${state.packageInfo?.version}",
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: KSize.s8),
+                    ),
+                  );
+                }),
+                TextButton(
+                  onPressed: () {
+                    checkedTaskRead.export();
+                  },
+                  child: const Text('Export'),
+                ),
+              ],
+            ),
             const SizedBox(
               height: KSize.s16,
             ),

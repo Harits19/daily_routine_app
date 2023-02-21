@@ -1,0 +1,45 @@
+{
+  "checked_tasks": [
+    {
+      "id_task": "1676958371329581",
+      "date": "2023-02-21 12:46:14.384305"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "1676461392234696",
+      "title": "Sstrika",
+      "date": "null",
+      "list_of_days": [
+        "saturday"
+      ],
+      "time": {
+        "hour": 5,
+        "minute": 0
+      },
+      "is_deleted": false
+    },
+    {
+      "id": "1676958371329581",
+      "title": "test 1",
+      "date": "2023-02-21 00:00:00.000",
+      "list_of_days": [],
+      "time": {
+        "hour": 12,
+        "minute": 45
+      },
+      "is_deleted": false
+    },
+    {
+      "id": "1676958386540127",
+      "title": "test 2",
+      "date": "2023-02-21 00:00:00.000",
+      "list_of_days": [],
+      "time": {
+        "hour": 12,
+        "minute": 46
+      },
+      "is_deleted": false
+    }
+  ]
+}
