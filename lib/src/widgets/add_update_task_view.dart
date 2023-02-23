@@ -112,13 +112,8 @@ class _AddUpdateTaskViewState extends State<AddUpdateTaskView> {
               DropdownModalView<TaskType>(
                 value: taskType,
                 isExpanded: true,
-                items: [
-                  ...TaskType.values.map(
-                    (e) => DropdownMenuItem(
-                      value: e,
-                      child: Text(e.toString()),
-                    ),
-                  ),
+                items: const [
+                  ...TaskType.values,
                 ],
                 onChanged: (val) {
                   taskType = val;
