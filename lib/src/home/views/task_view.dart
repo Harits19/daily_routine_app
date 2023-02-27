@@ -53,112 +53,112 @@ class _TaskViewState extends State<TaskView> {
     );
 
     final checkable = widget.checkable;
-    return Consumer<CheckedTaskController>(builder: (context, state, child) {
-      var isChecked =
-          state.data.any((element) => element.isSameWith(checkedTask));
-      checked() {
-        log.info("called checked");
-        log.info({isChecked});
-        if (isChecked) {
-          checkedTaskState.deleteCheckedTask(checkedTask);
-          return;
-        }
-        checkedTaskState.addCheckedTask(
-          checkedTask,
-        );
-      }
-
-      return TouchableOpacity(
-        onTap: checkable
-            ? () {
-                checked();
-              }
-            : null,
-        onLongPress: () {
-          UtilView.showActionView(
-            context,
-            actions: [
-              ActionView(
-                text: "Delete",
-                icon: Icons.delete,
-                onPress: () {
-                  taskState.deleteTask(task.id).then(
-                        (value) => Navigator.pop(context),
-                      );
-                },
-              ),
-              ActionView(
-                text: "Edit",
-                icon: Icons.edit,
-                onPress: () {
-                  Navigator.pop(context);
-                  AddUpdateTaskView.show(context, task: task).then((value) {
-                    if (value == null) return;
-                    taskState.updateTask(value);
-                  });
-                },
-              ),
-            ],
+    return Consumer<CheckedTaskController>(
+      builder: (context, state, child) {
+        var isChecked =
+            state.data.any((element) => element.isSameWith(checkedTask));
+        void checked() {
+          if (isChecked) {
+            checkedTaskState.deleteCheckedTask(checkedTask);
+            return;
+          }
+          checkedTaskState.addCheckedTask(
+            checkedTask,
           );
-        },
-        child: AnimatedOpacity(
-          opacity: opacity,
-          duration: const Duration(milliseconds: 250),
-          child: Card(
-            margin: const EdgeInsets.symmetric(
-              horizontal: KSize.s16,
-              vertical: KSize.s8,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(KSize.s16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: MyColumn(
-                      spacing: KSize.s8,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text(
-                          task.title,
-                          style: TextStyle(
-                            decoration:
-                                isChecked ? TextDecoration.lineThrough : null,
-                          ),
-                        ),
-                        Text(
-                          task.time.format(context),
-                          style: const TextStyle(
-                            fontSize: KSize.s12,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        if (task.isRecurring)
+        }
+
+        return TouchableOpacity(
+          onTap: checkable
+              ? () {
+                  checked();
+                }
+              : null,
+          onLongPress: () {
+            ActionView.show(
+              context,
+              actions: [
+                ActionItem(
+                  text: "Delete",
+                  icon: Icons.delete,
+                  onPress: () {
+                    taskState.deleteTask(task.id).then(
+                          (value) => Navigator.pop(context),
+                        );
+                  },
+                ),
+                ActionItem(
+                  text: "Edit",
+                  icon: Icons.edit,
+                  onPress: () {
+                    Navigator.pop(context);
+                    AddUpdateTaskView.show(context, task: task).then((value) {
+                      if (value == null) return;
+                      taskState.updateTask(value);
+                    });
+                  },
+                ),
+              ],
+            );
+          },
+          child: AnimatedOpacity(
+            opacity: opacity,
+            duration: const Duration(milliseconds: 250),
+            child: Card(
+              margin: const EdgeInsets.symmetric(
+                horizontal: KSize.s16,
+                vertical: KSize.s8,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(KSize.s16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: MyColumn(
+                        spacing: KSize.s8,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
                           Text(
-                            task.listOfDays
-                                .map((e) => e.formattedName)
-                                .join(', '),
-                            style: const TextStyle(
-                              fontSize: KSize.s8,
-                              color: Colors.blueGrey,
+                            task.title,
+                            style: TextStyle(
+                              decoration:
+                                  isChecked ? TextDecoration.lineThrough : null,
                             ),
                           ),
-                      ],
+                          Text(
+                            task.time.format(context),
+                            style: const TextStyle(
+                              fontSize: KSize.s12,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          if (task.isRecurring)
+                            Text(
+                              task.listOfDays
+                                  .map((e) => e.formattedName)
+                                  .join(', '),
+                              style: const TextStyle(
+                                fontSize: KSize.s8,
+                                color: Colors.blueGrey,
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
-                  ),
-                  if (checkable)
-                    Checkbox(
-                      value: isChecked,
-                      onChanged: (val) {
-                        if (val == null) return;
-                        checked();
-                      },
-                    ),
-                ],
+                    if (checkable)
+                      Checkbox(
+                        value: isChecked,
+                        onChanged: (val) {
+                          if (val == null) return;
+                          checked();
+                        },
+                      ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

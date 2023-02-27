@@ -6,16 +6,15 @@ class AppController with ChangeNotifier {
   ThemeMode? themeMode;
   PackageInfo? packageInfo;
 
-  void initApp() {
-    themeMode = ThemeMode.system;
-    AppService.getAppDetail().then((value) {
-      packageInfo = value;
-      notifyListeners();
-    });
+  void initApp() async {
+    themeMode = AppService.getThemeMode();
+    packageInfo = await AppService.getAppDetail();
+    notifyListeners();
   }
 
-  void setThemeMode(ThemeMode? themeMode) {
-    this.themeMode = themeMode;
+  void setThemeMode(ThemeMode themeMode) async {
+    await AppService.setThemeMode(themeMode);
+    this.themeMode = AppService.getThemeMode();
     notifyListeners();
   }
 }

@@ -16,7 +16,7 @@ extension TimeOfDayExtension on TimeOfDay {
   }
 
   String get to24HourFormat {
-String addLeadingZeroIfNeeded(int value) {
+    String addLeadingZeroIfNeeded(int value) {
       if (value < 10) {
         return '0$value';
       }
@@ -26,5 +26,6 @@ String addLeadingZeroIfNeeded(int value) {
     final String hourLabel = addLeadingZeroIfNeeded(hour);
     final String minuteLabel = addLeadingZeroIfNeeded(minute);
 
-    return '$hourLabel:$minuteLabel';  }
+    return '$hourLabel:$minuteLabel';
+  }
 }

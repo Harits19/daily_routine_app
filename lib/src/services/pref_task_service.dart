@@ -1,12 +1,12 @@
 import 'dart:convert';
 
+import 'package:daily_routine_app/src/extensions/shared_prefs_extension.dart';
 import 'package:daily_routine_app/src/models/task_model.dart';
 import 'package:daily_routine_app/src/services/service_instance.dart';
 import 'package:daily_routine_app/src/utils/log_util.dart';
 
 class PrefTaskService {
   static const name = "PrefTaskService";
-  static const _keyTask = "keyTask";
   static final log = LogUtil(name);
 
   static Future<void> addTask(TaskModel task) async {
@@ -16,7 +16,7 @@ class PrefTaskService {
   }
 
   static List<TaskModel> getTask() {
-    final json = ServiceInstance.prefs.getString(_keyTask);
+    final json = ServiceInstance.prefs.getStringV2(SharedPrefKey.task);
     if (json == null) {
       return [];
     }
@@ -28,7 +28,7 @@ class PrefTaskService {
   static Future<void> addTasks(List<TaskModel> tasks) async {
     final dataJson = tasks.map((e) => e.toJson()).toList();
     final dataString = jsonEncode(dataJson);
-    await ServiceInstance.prefs.setString(_keyTask, dataString);
+    await ServiceInstance.prefs.setStringV2(SharedPrefKey.task, dataString);
   }
 
   static Future<void> updateTask(TaskModel task) {

@@ -2,13 +2,13 @@ import 'package:daily_routine_app/src/enums/task_type.dart';
 import 'package:daily_routine_app/src/extensions/date_format_extension.dart';
 import 'package:daily_routine_app/src/extensions/weekend_extension.dart';
 import 'package:daily_routine_app/src/widgets/dropdown_modal_view.dart';
-import 'package:daily_routine_app/src/widgets/util_view.dart';
 import 'package:daily_routine_app/src/models/task_model.dart';
 import 'package:daily_routine_app/src/extensions/list_extension.dart';
 import 'package:daily_routine_app/src/utils/log_util.dart';
 import 'package:daily_routine_app/src/widgets/my_card.dart';
 import 'package:daily_routine_app/src/widgets/my_column.dart';
 import 'package:daily_routine_app/src/widgets/touchable_opacity.dart';
+import 'package:daily_routine_app/src/widgets/weekend_view.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -141,7 +141,7 @@ class _AddUpdateTaskViewState extends State<AddUpdateTaskView> {
               if (isRecurringTask)
                 TouchableOpacity(
                   onTap: () {
-                    UtilView.chooseWeekend(
+                    WeekendView.show(
                       context,
                       initialValue: listOfDays,
                     ).then((value) {

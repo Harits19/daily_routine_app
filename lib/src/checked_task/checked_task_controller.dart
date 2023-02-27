@@ -7,7 +7,7 @@ import 'package:daily_routine_app/src/utils/log_util.dart';
 import 'package:flutter/material.dart';
 
 class CheckedTaskController with ChangeNotifier {
-  final log = LogUtil("CheckedTaskController");
+  final log = LogUtil((CheckedTaskController).toString());
   var data = <CheckedTaskModel>[];
   TaskController? taskController;
 
