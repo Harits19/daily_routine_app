@@ -11,7 +11,9 @@ _$_DailyRoutineModel _$$_DailyRoutineModelFromJson(Map<String, dynamic> json) =>
       checkedTasks: (json['checkedTasks'] as List<dynamic>)
           .map((e) => CheckedTaskModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      tasks: json['tasks'] as List<dynamic>,
+      tasks: (json['tasks'] as List<dynamic>)
+          .map((e) => TaskModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$_DailyRoutineModelToJson(
