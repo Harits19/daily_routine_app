@@ -40,17 +40,7 @@ class MyApp extends StatelessWidget {
           ],
           theme: ThemeData(),
           darkTheme: ThemeData.dark(),
-          onGenerateRoute: (RouteSettings routeSettings) {
-            return MaterialPageRoute<void>(
-              settings: routeSettings,
-              builder: (BuildContext context) {
-                switch (routeSettings.name) {
-                  default:
-                    return const Home();
-                }
-              },
-            );
-          },
+          home: const Home(),
         );
       }),
     );

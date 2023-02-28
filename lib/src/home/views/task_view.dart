@@ -7,7 +7,6 @@ import 'package:daily_routine_app/src/utils/log_util.dart';
 import 'package:daily_routine_app/src/widgets/action_view.dart';
 import 'package:daily_routine_app/src/widgets/add_update_task_view.dart';
 import 'package:daily_routine_app/src/widgets/my_column.dart';
-import 'package:daily_routine_app/src/widgets/util_view.dart';
 import 'package:daily_routine_app/src/models/task_model.dart';
 import 'package:daily_routine_app/src/widgets/touchable_opacity.dart';
 import 'package:flutter/material.dart';

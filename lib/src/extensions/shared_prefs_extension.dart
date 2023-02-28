@@ -1,10 +1,7 @@
+import 'package:daily_routine_app/src/enums/shared_pref_key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum SharedPrefKey {
-  checkedTask,
-  task,
-  themeMode;
-}
+
 
 extension SharedPrefExtension on SharedPreferences {
   String? getStringV2(SharedPrefKey key) {

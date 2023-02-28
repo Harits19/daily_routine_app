@@ -1,6 +1,7 @@
 import 'package:daily_routine_app/src/app/app_controller.dart';
 import 'package:daily_routine_app/src/checked_task/checked_task_controller.dart';
 import 'package:daily_routine_app/src/constan/k_size.dart';
+import 'package:daily_routine_app/src/extensions/string_extension.dart';
 import 'package:daily_routine_app/src/widgets/confirm_import_view.dart';
 import 'package:daily_routine_app/src/widgets/my_bottom_sheet_view.dart';
 import 'package:daily_routine_app/src/widgets/my_column.dart';
@@ -28,12 +29,16 @@ class DrawerView extends StatelessWidget {
                   showModalBottomSheet<ThemeMode>(
                     context: context,
                     builder: (context) => Consumer<AppController>(
-                        builder: (context, state, child) {
-                      return MyBottomSheetView<ThemeMode>(
-                        value: state.themeMode,
-                        items: ThemeMode.values,
-                      );
-                    }),
+                      builder: (context, state, child) {
+                        return MyBottomSheetView<ThemeMode>(
+                          value: state.themeMode,
+                          items: ThemeMode.values,
+                          itemsText: ThemeMode.values
+                              .map((e) => e.name.toCapitalize)
+                              .toList(),
+                        );
+                      },
+                    ),
                   ).then((value) {
                     if (value == null) return;
                     appRead.setThemeMode(value);
