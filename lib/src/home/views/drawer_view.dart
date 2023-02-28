@@ -2,6 +2,7 @@ import 'package:daily_routine_app/src/app/app_controller.dart';
 import 'package:daily_routine_app/src/checked_task/checked_task_controller.dart';
 import 'package:daily_routine_app/src/constan/k_size.dart';
 import 'package:daily_routine_app/src/extensions/string_extension.dart';
+import 'package:daily_routine_app/src/localization/localization.dart';
 import 'package:daily_routine_app/src/widgets/confirm_import_view.dart';
 import 'package:daily_routine_app/src/widgets/my_bottom_sheet_view.dart';
 import 'package:daily_routine_app/src/widgets/my_column.dart';
@@ -25,26 +26,49 @@ class DrawerView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             TextButton(
-                onPressed: () {
-                  showModalBottomSheet<ThemeMode>(
-                    context: context,
-                    builder: (context) => Consumer<AppController>(
-                      builder: (context, state, child) {
-                        return MyBottomSheetView<ThemeMode>(
-                          value: state.themeMode,
-                          items: ThemeMode.values,
-                          textItem: (val) {
-                            return val.name.toCapitalize;
-                          },
-                        );
-                      },
-                    ),
-                  ).then((value) {
-                    if (value == null) return;
-                    appRead.setThemeMode(value);
-                  });
-                },
-                child: const Text("Theme")),
+              onPressed: () {
+                showModalBottomSheet<MyLanguage>(
+                  context: context,
+                  builder: (context) => Consumer<AppController>(
+                    builder: (context, state, child) {
+                      return MyBottomSheetView<MyLanguage>(
+                        value: state.myLanguage,
+                        items: MyLanguage.values,
+                        textItem: (val) {
+                          return val.name.toUpperCase();
+                        },
+                      );
+                    },
+                  ),
+                ).then((value) {
+                  if (value == null) return;
+                  appRead.setLanguage(value);
+                });
+              },
+              child: const Text("Language"),
+            ),
+            TextButton(
+              onPressed: () {
+                showModalBottomSheet<ThemeMode>(
+                  context: context,
+                  builder: (context) => Consumer<AppController>(
+                    builder: (context, state, child) {
+                      return MyBottomSheetView<ThemeMode>(
+                        value: state.themeMode,
+                        items: ThemeMode.values,
+                        textItem: (val) {
+                          return val.name.toCapitalize;
+                        },
+                      );
+                    },
+                  ),
+                ).then((value) {
+                  if (value == null) return;
+                  appRead.setThemeMode(value);
+                });
+              },
+              child: const Text("Theme"),
+            ),
             TextButton(
               onPressed: () {
                 ConfirmImportView.show(context).then((confirmImport) {
@@ -68,7 +92,7 @@ class DrawerView extends StatelessWidget {
             ),
             Consumer<AppController>(builder: (context, state, child) {
               return Text(
-                "version ${state.packageInfo?.version}",
+                "${T.version.text(state.myLanguage)} ${state.packageInfo?.version}",
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: KSize.s8),
               );
