@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-final appNotifier = StateNotifierProvider<AppNotifier, AppProvider>(
+final appProvider = StateNotifierProvider<AppNotifier, AppProvider>(
     (ref) => AppNotifier()..initApp());
 
 class AppNotifier extends StateNotifier<AppProvider> {

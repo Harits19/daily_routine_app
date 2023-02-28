@@ -25,6 +25,6 @@ class LogUtil {
   }
 }
 
-void myPrint(dynamic message) {
-  LogUtil('default').info(message);
+void myPrint(dynamic message, {String key = 'default'}) {
+  LogUtil(key).info(message);
 }

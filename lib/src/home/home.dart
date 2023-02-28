@@ -1,23 +1,23 @@
 import 'package:daily_routine_app/src/constan/k_size.dart';
 import 'package:daily_routine_app/src/extensions/date_time_extension.dart';
 import 'package:daily_routine_app/src/extensions/int_extension.dart';
+import 'package:daily_routine_app/src/extensions/time_of_day_extension.dart';
 import 'package:daily_routine_app/src/home/views/drawer_view.dart';
 import 'package:daily_routine_app/src/home/views/floating_button_view.dart';
 import 'package:daily_routine_app/src/home/views/task_view.dart';
-import 'package:daily_routine_app/src/extensions/time_of_day_extension.dart';
 import 'package:daily_routine_app/src/task/task_controller.dart';
 import 'package:daily_routine_app/src/widgets/horizontal_calendar_view.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Home extends StatefulWidget {
+class Home extends ConsumerStatefulWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  ConsumerState<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends ConsumerState<Home> {
   var selectedDate = DateTime.now();
 
   @override
@@ -43,15 +43,17 @@ class _HomeState extends State<Home> {
             const SizedBox(
               height: KSize.s16,
             ),
-            Consumer<TaskController>(builder: (context, task, child) {
+            (() {
+              final task = ref.watch(taskProvider);
               final sortedTask = [...task.data];
               sortedTask.sort((a, b) {
                 return a.time.compareTo(b.time);
               });
               final filteredTask = sortedTask.where((element) {
-                return element.listOfDays
-                        .contains(selectedDate.weekday.toWeekend) ||
-                    element.date.isSameDate(selectedDate);
+                return element.isDeleted == false &&
+                    (element.listOfDays
+                            .contains(selectedDate.weekday.toWeekend) ||
+                        element.date.isSameDate(selectedDate));
               });
               final checkable = selectedDate.isSameDate(
                 DateTime.now(),
@@ -66,7 +68,7 @@ class _HomeState extends State<Home> {
                   ),
                 ],
               );
-            }),
+            }()),
 
             //dummy add button
             Opacity(

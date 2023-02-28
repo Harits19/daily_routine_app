@@ -3,23 +3,25 @@ import 'package:daily_routine_app/src/models/daily_routine_model.dart';
 import 'package:daily_routine_app/src/services/path_provider_service.dart';
 import 'package:daily_routine_app/src/services/pref_checked_task_service.dart';
 import 'package:daily_routine_app/src/task/task_controller.dart';
-import 'package:daily_routine_app/src/utils/log_util.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CheckedTaskController with ChangeNotifier {
-  final log = LogUtil((CheckedTaskController).toString());
-  var data = <CheckedTaskModel>[];
-  TaskController? taskController;
+final checkedTaskProvider =
+    StateNotifierProvider<CheckedTaskNotifier, CheckedTaskProvider>((ref) {
+  return CheckedTaskNotifier(ref: ref)..getListCheckedTask();
+});
 
-  void update(TaskController taskController) {
-    this.taskController = taskController;
-  }
+class CheckedTaskNotifier extends StateNotifier<CheckedTaskProvider> {
+  CheckedTaskNotifier({
+    required this.ref,
+  }) : super(CheckedTaskProvider());
+
+  final Ref ref;
 
   Future<void> export() {
     return PathProviderService.export(
       DailyRoutineModel(
-        checkedTasks: data,
-        tasks: taskController?.data ?? [],
+        checkedTasks: state.data,
+        tasks: ref.watch(taskProvider).data,
       ),
     );
   }
@@ -28,7 +30,7 @@ class CheckedTaskController with ChangeNotifier {
     return PathProviderService.import().then((value) async {
       if (value == null) return;
       addCheckedTasks(value.checkedTasks);
-      taskController?.addTasks(value.tasks);
+      ref.read(taskProvider.notifier).addTasks(value.tasks);
     });
   }
 
@@ -40,15 +42,14 @@ class CheckedTaskController with ChangeNotifier {
   }
 
   Future<void> addCheckedTask(CheckedTaskModel task) {
-    log.info(task);
     return PrefCheckedTaskService.addCheckedTask(task).then((value) {
       getListCheckedTask();
     });
   }
 
   void getListCheckedTask() {
-    data = PrefCheckedTaskService.getListCheckedTask();
-    notifyListeners();
+    state =
+        CheckedTaskProvider(data: PrefCheckedTaskService.getListCheckedTask());
   }
 
   Future<void> deleteCheckedTask(CheckedTaskModel checkedTask) {
@@ -56,4 +57,10 @@ class CheckedTaskController with ChangeNotifier {
       getListCheckedTask();
     });
   }
+}
+
+class CheckedTaskProvider {
+  final List<CheckedTaskModel> data;
+
+  CheckedTaskProvider({this.data = const []});
 }

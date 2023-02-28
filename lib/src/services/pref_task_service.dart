@@ -21,6 +21,7 @@ class PrefTaskService {
     if (json == null) {
       return [];
     }
+    log.info(json);
     return (jsonDecode(json) as List)
         .map((e) => TaskModel.fromJson(e))
         .toList();
