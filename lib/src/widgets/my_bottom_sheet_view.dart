@@ -5,22 +5,16 @@ import 'package:daily_routine_app/src/widgets/touchable_opacity.dart';
 import 'package:flutter/material.dart';
 
 class MyBottomSheetView<T> extends StatelessWidget {
-  MyBottomSheetView({
+  const MyBottomSheetView({
     super.key,
     required this.items,
     this.value,
-    List<String> itemsText = const [],
-  }) : itemsText = itemsText.isEmpty
-            ? items.map((e) => e.toString()).toList()
-            : (() {
-                assert((itemsText.length == items.length),
-                    "must have same length");
-                return itemsText;
-              }());
+    this.textItem,
+  });
 
   final List<T> items;
-  final List<String> itemsText;
   final T? value;
+  final String Function(T value)? textItem;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +37,7 @@ class MyBottomSheetView<T> extends StatelessWidget {
                 },
                 child: MyCard(
                   isSelected: value == e,
-                  text: itemsText[index],
+                  text: textItem != null ? textItem!(e) : e.toString(),
                 ),
               );
             },

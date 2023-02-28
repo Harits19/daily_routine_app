@@ -33,9 +33,9 @@ class DrawerView extends StatelessWidget {
                         return MyBottomSheetView<ThemeMode>(
                           value: state.themeMode,
                           items: ThemeMode.values,
-                          itemsText: ThemeMode.values
-                              .map((e) => e.name.toCapitalize)
-                              .toList(),
+                          textItem: (val) {
+                            return val.name.toCapitalize;
+                          },
                         );
                       },
                     ),
