@@ -12,17 +12,22 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      restorationScopeId: 'app',
-      themeMode: ref.watch(appProvider).themeMode,
-      supportedLocales: const [
-        Locale('en', ''), // English, no country code
-        Locale('id', ''),
-      ],
-      theme: ThemeData(),
-      darkTheme: ThemeData.dark(),
-      home: const Home(),
+    return Listener(
+      onPointerDown: (_) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        restorationScopeId: 'app',
+        themeMode: ref.watch(appProvider).themeMode,
+        supportedLocales: const [
+          Locale('en', ''), // English, no country code
+          Locale('id', ''),
+        ],
+        theme: ThemeData(),
+        darkTheme: ThemeData.dark(),
+        home: const Home(),
+      ),
     );
   }
 }
