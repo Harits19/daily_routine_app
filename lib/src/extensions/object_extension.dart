@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
-extension LogUtil on Object {
+extension ObjectExtension on Object {
   myPrint(dynamic message, {String? key}) {
+    if (kReleaseMode) return;
     final name = runtimeType.toString();
     final prettyLogger = Logger(
       printer: PrettyPrinter(

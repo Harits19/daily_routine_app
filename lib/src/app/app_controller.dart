@@ -1,4 +1,5 @@
-import 'package:daily_routine_app/src/localization/localization.dart';
+import 'package:daily_routine_app/src/enums/localization.dart';
+import 'package:daily_routine_app/src/enums/my_language.dart';
 import 'package:daily_routine_app/src/services/app_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,9 +11,9 @@ final appProvider = StateNotifierProvider<AppNotifier, AppProvider>(
 class AppNotifier extends StateNotifier<AppProvider> {
   AppNotifier() : super(AppProvider());
   void initApp() async {
-    final themeMode = AppService.getThemeMode();
-    final myLanguage = AppService.getMyLanguage();
-    final packageInfo = await AppService.getAppDetail();
+    final themeMode = AppService().getThemeMode();
+    final myLanguage = AppService().getMyLanguage();
+    final packageInfo = await AppService().getAppDetail();
     state = AppProvider(
       myLanguage: myLanguage,
       packageInfo: packageInfo,
@@ -21,13 +22,13 @@ class AppNotifier extends StateNotifier<AppProvider> {
   }
 
   void setThemeMode(ThemeMode themeMode) async {
-    await AppService.setThemeMode(themeMode);
-    state = state.copyWith(themeMode: AppService.getThemeMode());
+    await AppService().setThemeMode(themeMode);
+    state = state.copyWith(themeMode: AppService().getThemeMode());
   }
 
   void setLanguage(MyLanguage myLanguage) async {
-    await AppService.setMyLanguage(myLanguage);
-    state = state.copyWith(myLanguage: AppService.getMyLanguage());
+    await AppService().setMyLanguage(myLanguage);
+    state = state.copyWith(myLanguage: AppService().getMyLanguage());
   }
 }
 

@@ -4,7 +4,7 @@ import 'package:daily_routine_app/src/enums/shared_pref_key.dart';
 import 'package:daily_routine_app/src/extensions/shared_prefs_extension.dart';
 import 'package:daily_routine_app/src/models/checked_task_model.dart';
 import 'package:daily_routine_app/src/services/service_instance.dart';
-import 'package:daily_routine_app/src/utils/log_util.dart';
+import 'package:daily_routine_app/src/extensions/object_extension.dart';
 
 class PrefCheckedTaskService {
   Future<void> addCheckedTask(CheckedTaskModel checkedTask) async {
@@ -14,7 +14,7 @@ class PrefCheckedTaskService {
   }
 
   List<CheckedTaskModel> getListCheckedTask() {
-    final json = ServiceInstance.prefs.getStringV2(SharedPrefKey.checkedTask);
+    final json = ServiceInstance().prefs.getStringV2(SharedPrefKey.checkedTask);
     if (json == null) {
       return [];
     }
@@ -34,7 +34,7 @@ class PrefCheckedTaskService {
     final dataJson = listCheckedTask.map((e) => e.toJson()).toList();
     final dataString = jsonEncode(dataJson);
     myPrint(dataString);
-    await ServiceInstance.prefs
+    await ServiceInstance().prefs
         .setStringV2(SharedPrefKey.checkedTask, dataString);
   }
 }

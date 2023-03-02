@@ -1,8 +1,9 @@
 import 'package:daily_routine_app/src/app/app_controller.dart';
 import 'package:daily_routine_app/src/checked_task/checked_task_controller.dart';
 import 'package:daily_routine_app/src/constan/k_size.dart';
+import 'package:daily_routine_app/src/enums/my_language.dart';
 import 'package:daily_routine_app/src/extensions/string_extension.dart';
-import 'package:daily_routine_app/src/localization/localization.dart';
+import 'package:daily_routine_app/src/enums/localization.dart';
 import 'package:daily_routine_app/src/widgets/confirm_import_view.dart';
 import 'package:daily_routine_app/src/widgets/my_bottom_sheet_view.dart';
 import 'package:daily_routine_app/src/widgets/my_column.dart';

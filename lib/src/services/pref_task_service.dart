@@ -4,7 +4,7 @@ import 'package:daily_routine_app/src/enums/shared_pref_key.dart';
 import 'package:daily_routine_app/src/extensions/shared_prefs_extension.dart';
 import 'package:daily_routine_app/src/models/task_model.dart';
 import 'package:daily_routine_app/src/services/service_instance.dart';
-import 'package:daily_routine_app/src/utils/log_util.dart';
+import 'package:daily_routine_app/src/extensions/object_extension.dart';
 
 class PrefTaskService {
   Future<void> addTask(TaskModel task) async {
@@ -14,7 +14,7 @@ class PrefTaskService {
   }
 
   List<TaskModel> getTask() {
-    final json = ServiceInstance.prefs.getStringV2(SharedPrefKey.task);
+    final json = ServiceInstance().prefs.getStringV2(SharedPrefKey.task);
     if (json == null) {
       return [];
     }
@@ -27,7 +27,7 @@ class PrefTaskService {
   Future<void> addTasks(List<TaskModel> tasks) async {
     final dataJson = tasks.map((e) => e.toJson()).toList();
     final dataString = jsonEncode(dataJson);
-    await ServiceInstance.prefs.setStringV2(SharedPrefKey.task, dataString);
+    await ServiceInstance().prefs.setStringV2(SharedPrefKey.task, dataString);
   }
 
   Future<void> updateTask(TaskModel task) {

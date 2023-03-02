@@ -7,7 +7,7 @@ class ServiceInstance {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  static SharedPreferences get prefs {
+   SharedPreferences get prefs {
     if (_prefs == null) throw Exception("prefs not initialized");
     return _prefs!;
   }

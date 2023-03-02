@@ -1,6 +1,6 @@
 import 'package:daily_routine_app/src/models/task_model.dart';
 import 'package:daily_routine_app/src/services/pref_task_service.dart';
-import 'package:daily_routine_app/src/utils/log_util.dart';
+import 'package:daily_routine_app/src/extensions/object_extension.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final taskProvider = StateNotifierProvider<TaskNotifier, TaskProvider>((ref) {

@@ -1,4 +1,4 @@
-import 'package:daily_routine_app/src/utils/log_util.dart';
+import 'package:daily_routine_app/src/extensions/object_extension.dart';
 
 extension StringExtension on String {
   String get toCapitalize {

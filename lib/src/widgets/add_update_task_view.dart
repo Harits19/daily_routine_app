@@ -4,7 +4,6 @@ import 'package:daily_routine_app/src/extensions/weekend_extension.dart';
 import 'package:daily_routine_app/src/widgets/dropdown_modal_view.dart';
 import 'package:daily_routine_app/src/models/task_model.dart';
 import 'package:daily_routine_app/src/extensions/list_extension.dart';
-import 'package:daily_routine_app/src/utils/log_util.dart';
 import 'package:daily_routine_app/src/widgets/my_card.dart';
 import 'package:daily_routine_app/src/widgets/my_column.dart';
 import 'package:daily_routine_app/src/widgets/touchable_opacity.dart';

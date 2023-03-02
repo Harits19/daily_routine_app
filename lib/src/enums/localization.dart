@@ -1,7 +1,6 @@
-enum MyLanguage {
-  id,
-  en;
-}
+
+
+import 'package:daily_routine_app/src/enums/my_language.dart';
 
 enum Localization {
   version(en: "Version", id: "Versi"),
