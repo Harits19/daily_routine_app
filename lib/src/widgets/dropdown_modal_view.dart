@@ -18,39 +18,40 @@ class DropdownModalView<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TouchableOpacity(
-        onTap: () async {
-          final selectedValue = await showModalBottomSheet<T>(
-            context: context,
-            builder: (context) {
-              return MyBottomSheetView(
-                items: items,
-                value: value,
-              );
-            },
-          );
-          if (onChanged == null || selectedValue == null) return;
-          onChanged!(selectedValue);
-        },
-        child: Container(
-          color: Colors.transparent,
-          child: IgnorePointer(
-            ignoring: true,
-            child: DropdownButton<T>(
+      onTap: () async {
+        final selectedValue = await showModalBottomSheet<T>(
+          context: context,
+          builder: (context) {
+            return MyBottomSheetView(
+              items: items,
               value: value,
-              items: [
-                ...items.map(
-                  (e) => DropdownMenuItem(
-                    value: e,
-                    child: Text(
-                      e.toString(),
-                    ),
+            );
+          },
+        );
+        if (onChanged == null || selectedValue == null) return;
+        onChanged!(selectedValue);
+      },
+      child: Container(
+        color: Colors.transparent,
+        child: IgnorePointer(
+          ignoring: true,
+          child: DropdownButton<T>(
+            value: value,
+            items: [
+              ...items.map(
+                (e) => DropdownMenuItem(
+                  value: e,
+                  child: Text(
+                    e.toString(),
                   ),
-                )
-              ],
-              isExpanded: isExpanded,
-              onChanged: (val) {},
-            ),
+                ),
+              )
+            ],
+            isExpanded: isExpanded,
+            onChanged: (val) {},
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

@@ -2,11 +2,9 @@ import 'dart:convert';
 
 import 'package:logger/logger.dart';
 
-class LogUtil {
-  String name;
-  LogUtil(this.name);
-
-  info(dynamic message, {String? key}) {
+extension LogUtil on Object {
+  myPrint(dynamic message, {String? key}) {
+    final name = runtimeType.toString();
     final prettyLogger = Logger(
       printer: PrettyPrinter(
         printEmojis: false,
@@ -17,14 +15,16 @@ class LogUtil {
     } catch (e) {
       //
     }
-    prettyLogger.log(Level.info, {
-      "source": name,
-      "key": key,
-      "detail": message,
-    });
+    prettyLogger.log(
+      Level.info,
+      {
+        "source": name,
+        "key": key,
+        "detail": message,
+      },
+    );
+    print(
+      'source : $name \nkey : $key \nmessage : $message',
+    );
   }
-}
-
-void myPrint(dynamic message, {String key = 'default'}) {
-  LogUtil(key).info(message);
 }

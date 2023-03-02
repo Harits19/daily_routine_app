@@ -1,7 +1,5 @@
 import 'package:daily_routine_app/src/utils/log_util.dart';
 
-final log = LogUtil("StringExtension");
-
 extension StringExtension on String {
   String get toCapitalize {
     final splitString = split(" ");
@@ -11,7 +9,7 @@ extension StringExtension on String {
           string[0].toUpperCase() + string.substring(1, string.length);
       newString.add(capitalizedString);
     }
-    log.info(newString);
+    myPrint(newString);
     return newString.join(" ");
   }
 

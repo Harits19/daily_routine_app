@@ -7,7 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 class PathProviderService {
-  static Future<void> export(DailyRoutineModel dailyRoutineModel) async {
+    Future<void> export(DailyRoutineModel dailyRoutineModel) async {
     final tempPath = await getTemporaryDirectory();
     final jsonFile = File('${tempPath.path}/daily_routine.json');
     if (!(await jsonFile.exists())) {
@@ -18,7 +18,7 @@ class PathProviderService {
     Share.shareXFiles([XFile(jsonFile.path)]);
   }
 
-  static Future<DailyRoutineModel?> import() async {
+    Future<DailyRoutineModel?> import() async {
     final pickerResult = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['json'],

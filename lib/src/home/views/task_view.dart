@@ -29,7 +29,6 @@ class TaskView extends ConsumerStatefulWidget {
 
 class _TaskViewState extends ConsumerState<TaskView> {
   double opacity = 0;
-  final log = LogUtil("TaskView");
 
   @override
   void initState() {

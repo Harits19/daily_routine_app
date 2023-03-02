@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
 class TouchableOpacity extends StatefulWidget {
-  const TouchableOpacity(
-      {Key? key, required this.child, this.onTap, this.onLongPress})
-      : super(key: key);
+  const TouchableOpacity({
+    Key? key,
+    required this.child,
+    this.onTap,
+    this.onLongPress,
+  }) : super(key: key);
+
   final Widget child;
   final VoidCallback? onTap;
-  static const name = 'touchable_opacity';
   static const defaultOpacity = 0.5;
   final GestureLongPressCallback? onLongPress;
 

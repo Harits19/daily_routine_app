@@ -18,7 +18,7 @@ class CheckedTaskNotifier extends StateNotifier<CheckedTaskProvider> {
   final Ref ref;
 
   Future<void> export() {
-    return PathProviderService.export(
+    return PathProviderService().export(
       DailyRoutineModel(
         checkedTasks: state.data,
         tasks: ref.watch(taskProvider).data,
@@ -27,7 +27,7 @@ class CheckedTaskNotifier extends StateNotifier<CheckedTaskProvider> {
   }
 
   Future<void> import() {
-    return PathProviderService.import().then((value) async {
+    return PathProviderService().import().then((value) async {
       if (value == null) return;
       addCheckedTasks(value.checkedTasks);
       ref.read(taskProvider.notifier).addTasks(value.tasks);
@@ -35,25 +35,25 @@ class CheckedTaskNotifier extends StateNotifier<CheckedTaskProvider> {
   }
 
   Future<void> addCheckedTasks(List<CheckedTaskModel> checkedTasks) {
-    return PrefCheckedTaskService.addListCheckedTask(checkedTasks)
+    return PrefCheckedTaskService().addListCheckedTask(checkedTasks)
         .then((value) {
       getListCheckedTask();
     });
   }
 
   Future<void> addCheckedTask(CheckedTaskModel task) {
-    return PrefCheckedTaskService.addCheckedTask(task).then((value) {
+    return PrefCheckedTaskService().addCheckedTask(task).then((value) {
       getListCheckedTask();
     });
   }
 
   void getListCheckedTask() {
     state =
-        CheckedTaskProvider(data: PrefCheckedTaskService.getListCheckedTask());
+        CheckedTaskProvider(data: PrefCheckedTaskService().getListCheckedTask());
   }
 
   Future<void> deleteCheckedTask(CheckedTaskModel checkedTask) {
-    return PrefCheckedTaskService.deleteCheckedTask(checkedTask).then((value) {
+    return PrefCheckedTaskService().deleteCheckedTask(checkedTask).then((value) {
       getListCheckedTask();
     });
   }

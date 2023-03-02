@@ -11,13 +11,13 @@ class TaskNotifier extends StateNotifier<TaskProvider> {
   TaskNotifier() : super(const TaskProvider());
 
   Future<void> addTask(TaskModel task) {
-    return PrefTaskService.addTask(task).then((value) {
+    return PrefTaskService().addTask(task).then((value) {
       getTask();
     });
   }
 
   void getTask() {
-    state = TaskProvider(data: PrefTaskService.getTask());
+    state = TaskProvider(data: PrefTaskService().getTask());
   }
 
   Future<void> deleteTask(String id) {
@@ -33,13 +33,13 @@ class TaskNotifier extends StateNotifier<TaskProvider> {
   }
 
   Future<void> updateTask(TaskModel task) {
-    return PrefTaskService.updateTask(task).then((value) {
+    return PrefTaskService().updateTask(task).then((value) {
       getTask();
     });
   }
 
   Future<void> addTasks(List<TaskModel> tasks) {
-    return PrefTaskService.addTasks(tasks).then((value) {
+    return PrefTaskService().addTasks(tasks).then((value) {
       getTask();
     });
   }

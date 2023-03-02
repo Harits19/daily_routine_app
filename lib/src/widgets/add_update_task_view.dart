@@ -42,7 +42,6 @@ class AddUpdateTaskView extends StatefulWidget {
 class _AddUpdateTaskViewState extends State<AddUpdateTaskView> {
   late final task = widget.task;
   final now = DateTime.now();
-  final log = LogUtil(AddUpdateTaskView.name);
 
   late final title = TextEditingController(text: task?.title);
   late var date = task?.date;
