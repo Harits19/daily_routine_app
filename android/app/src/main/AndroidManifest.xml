@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.daily_routine_app">
+    package="com.daily_routine_app">
    <application
         android:label="Daily Routine App"
         android:name="${applicationName}"
