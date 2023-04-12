@@ -1,4 +1,3 @@
-import 'package:daily_routine_app/src/enums/localization.dart';
 import 'package:daily_routine_app/src/enums/my_language.dart';
 import 'package:daily_routine_app/src/services/app_service.dart';
 import 'package:flutter/material.dart';
