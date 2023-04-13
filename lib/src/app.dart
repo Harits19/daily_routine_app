@@ -17,12 +17,7 @@ class MyApp extends ConsumerWidget {
       },
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        restorationScopeId: 'app',
         themeMode: ref.watch(appProvider).themeMode,
-        supportedLocales: const [
-          Locale('en', ''), // English, no country code
-          Locale('id', ''),
-        ],
         theme: ThemeData(),
         darkTheme: ThemeData.dark(),
         home: const Home(),
